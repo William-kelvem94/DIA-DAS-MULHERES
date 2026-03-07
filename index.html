@@ -515,8 +515,16 @@
 const btn = document.getElementById('music-btn');
 const audio = document.getElementById('bg-audio');
 btn.addEventListener('click', () => {
+  // if the audio element still has placeholder URL, open YouTube instead
+  if (audio.src.includes('example.com')) {
+    window.open(videoUrl, '_blank');
+    return;
+  }
   if (audio.paused) {
-    audio.play();
+    audio.play().catch(() => {
+      // show toast if can't play
+      showToast('Não foi possível reproduzir o áudio.');
+    });
     btn.textContent = '🔇';
   } else {
     audio.pause();
