@@ -286,7 +286,7 @@
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
   <p class="hero-date">08 de Março de 2026 • Dia Internacional da Mulher</p>
-  <span class="hero-emoji">💖</span>
+  <span class="hero-emoji">🥰</span>
   <h1>Para a minha mulher favorita no mundo inteiro</h1>
   <p class="hero-sub">
     Não precisa ser um dia específico pra eu saber a sorte que tenho, mas hoje o mundo
@@ -308,7 +308,7 @@
   <!-- Momento 1 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
-      <span class="photo-badge">🌸 Minha inspiração</span>
+      <span class="photo-badge">� Minha inspiração</span>
       <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós juntos"/>
     </div>
     <div class="moment-card">
@@ -326,7 +326,7 @@
   <!-- Momento 2 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
-      <span class="photo-badge">🤝 Lado a lado</span>
+      <span class="photo-badge">� Lado a lado</span>
       <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Nós juntos"/>
     </div>
     <div class="moment-card">
@@ -355,7 +355,7 @@
   <!-- Momento 3 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
-      <span class="photo-badge">💻 Meu melhor projeto</span>
+      <span class="photo-badge">🧑‍💻 Meu melhor projeto</span>
       <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós juntos"/>
     </div>
     <div class="moment-card">
@@ -374,7 +374,7 @@
   <!-- Momento 4 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
-      <span class="photo-badge">🏡 Meu porto seguro</span>
+      <span class="photo-badge">� Meu porto seguro</span>
       <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Nós juntos"/>
     </div>
     <div class="moment-card">
@@ -469,7 +469,7 @@
 </div>
 
 <footer>
-  <span class="footer-hearts">💖 💕 💖</span>
+  <span class="footer-hearts">🥰 💗 🥰</span>
   Feito com <strong>muito amor</strong>, especialmente pra você.
 </footer>
 
@@ -483,6 +483,9 @@ const btn = document.getElementById('music-btn');
 const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
 btn.addEventListener('click', () => {
   window.open(videoUrl, '_blank');
+  // toggle icon when clicked
+  if (btn.textContent === '▶️') btn.textContent = '⏱️';
+  else btn.textContent = '▶️';
 });
 
 
@@ -595,7 +598,7 @@ document.addEventListener('click', e => {
   for (let i = 0; i < 7; i++) {
     const sp = document.createElement('span');
     sp.className = 'sparkle';
-    sp.textContent = ['💫','⭐','✨','💖','🌸'][Math.floor(Math.random() * 5)];
+    sp.textContent = ['✨','💫','🌟','💥','💎'][Math.floor(Math.random() * 5)];
     const size = Math.random() * 18 + 14;
     sp.style.cssText = `left:${e.clientX + (Math.random()-0.5)*60}px;top:${e.clientY + window.scrollY + (Math.random()-0.5)*60}px;font-size:${size}px`;
     document.body.appendChild(sp);
