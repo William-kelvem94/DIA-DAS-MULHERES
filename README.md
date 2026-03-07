@@ -68,6 +68,10 @@ Edite as seções `.moment-card` dentro do `index.html` — cada bloco tem uma t
 
 ## 🛠️ Tecnologias usadas
 
+Também inclui um pequeno script Python para gerar o arquivo `qrcode.png` (ver seção
+anterior).  
+
+
 - **HTML5 / CSS3** — layout, animações e efeitos visuais
 - **JavaScript vanilla** — typewriter, partículas, lightbox, sparkles, QR code
 - **[QRCode.js](https://davidshimjs.github.io/qrcodejs/)** — geração do QR Code no browser
