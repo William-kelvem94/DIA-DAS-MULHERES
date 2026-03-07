@@ -93,4 +93,4 @@ Desenvolvido com 💖 por **William Kelvem** para o Dia Internacional da Mulher,
 ---
 
 *"O meu mundo ficou infinitamente melhor quando você entrou nele."*
-\n<!-- commit adicional para mensagem detalhada ?? -->
+<!-- commit adicional para mensagem detalhada ?? -->
