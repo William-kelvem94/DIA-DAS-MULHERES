@@ -4,8 +4,9 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>💖 Para o meu Mozinho — Feliz Dia das Mulheres!</title>
-  <!-- música de fundo (substitua URL pelo mp3 disponível) -->
-  <audio id="bg-music" src="https://example.com/die-for-you.mp3" preload="auto" loop></audio>
+  <!-- botão abrir vídeo do refrão (YouTube) -->
+  <!-- o refrão começa aproximadamente em 0:44s -->
+
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -477,24 +478,12 @@
 <script>
 /* ── QR Code ─────────────────────── */
 
-/* música play/pause */
-const music = document.getElementById('bg-music');
+// abrir vídeo do YouTube em nova aba com o refrão
 const btn = document.getElementById('music-btn');
+const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
 btn.addEventListener('click', () => {
-  if (music.paused) {
-    music.play();
-    btn.textContent = '⏸️';
-    btn.classList.add('playing');
-  } else {
-    music.pause();
-    btn.textContent = '▶️';
-    btn.classList.remove('playing');
-  }
+  window.open(videoUrl, '_blank');
 });
-
-// tentar autoplay (alguns browsers bloqueiam)
-music.volume = 0.6; // suave
-music.play().catch(()=>{});
 
 
 window.addEventListener('DOMContentLoaded', () => {
