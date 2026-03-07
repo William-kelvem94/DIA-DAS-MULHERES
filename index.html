@@ -1,544 +1,454 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 Feliz Dia das Mulheres, Mozinho!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>💖 Para o meu Mozinho — Feliz Dia das Mulheres!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --rose:#f06292;--peach:#fce4ec;--deep:#880e4f;
+      --cream:#fff0f5;--purple:#ce93d8;--white:#fff;
+      --gold:#f9d423;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Lato',sans-serif;background:var(--cream);color:#444;overflow-x:hidden}
 
-    :root {
-      --rose:   #f06292;
-      --peach:  #fce4ec;
-      --deep:   #880e4f;
-      --cream:  #fff8f8;
-      --purple: #ce93d8;
-      --white:  #ffffff;
+    /* CANVAS FUNDO */
+    #bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+    /* HERO */
+    .hero{
+      min-height:100vh;
+      background:linear-gradient(150deg,#f8a5c2 0%,#c89fdb 45%,#f48fb1 100%);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:48px 24px;position:relative;z-index:1;overflow:hidden
+    }
+    .hero::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at center,rgba(255,255,255,0.18) 0%,transparent 70%);
+      pointer-events:none
+    }
+    .hero-date{
+      font-family:'Lato',sans-serif;font-size:0.78rem;letter-spacing:3px;
+      text-transform:uppercase;color:rgba(255,255,255,0.75);
+      margin-bottom:12px;animation:fadeUp 1s ease 0.1s both
+    }
+    .hero-emoji{
+      font-size:4rem;display:block;margin-bottom:10px;
+      animation:heartbeat 1.4s ease-in-out infinite
+    }
+    @keyframes heartbeat{
+      0%,100%{transform:scale(1)}
+      14%{transform:scale(1.25)}
+      28%{transform:scale(1)}
+      42%{transform:scale(1.15)}
+      70%{transform:scale(1)}
+    }
+    .hero h1{
+      font-family:'Dancing Script',cursive;
+      font-size:clamp(2.4rem,9vw,4.2rem);
+      color:var(--white);
+      text-shadow:0 3px 24px rgba(0,0,0,0.18);
+      line-height:1.2;max-width:580px;
+      animation:fadeUp 1s ease 0.3s both
+    }
+    .hero-sub{
+      margin-top:20px;font-size:1.05rem;
+      color:rgba(255,255,255,0.92);
+      max-width:430px;line-height:1.8;font-weight:300;
+      animation:fadeUp 1s ease 0.6s both
+    }
+    .typewriter{
+      font-family:'Dancing Script',cursive;
+      font-size:clamp(1.2rem,4vw,1.7rem);
+      color:var(--white);margin-top:28px;
+      min-height:2.2rem;
+      animation:fadeUp 0.8s ease 1s both
+    }
+    .scroll-hint{
+      margin-top:50px;color:rgba(255,255,255,0.65);
+      font-size:0.82rem;display:flex;flex-direction:column;align-items:center;gap:6px;
+      animation:fadeUp 1s ease 1.4s both
+    }
+    .scroll-hint svg{width:22px;height:22px;animation:arrowBounce 1.5s infinite}
+    @keyframes arrowBounce{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(8px);opacity:0.45}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+    /* WRAP */
+    .wrap{max-width:660px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+    /* RIBBON SEPARADOR */
+    .ribbon{
+      text-align:center;padding:32px 0 8px;
+      font-size:1.35rem;opacity:0.35;color:var(--rose);
+      letter-spacing:8px
     }
 
-    html { scroll-behavior: smooth; }
+    /* MOMENTO (foto + frase) */
+    .moment{
+      padding:56px 0;display:flex;flex-direction:column;
+      align-items:center;gap:28px;
+      opacity:0;transform:translateY(44px);
+      transition:opacity 0.8s ease,transform 0.8s ease
+    }
+    .moment.visible{opacity:1;transform:translateY(0)}
 
-    body {
-      font-family: 'Lato', sans-serif;
-      background: var(--cream);
-      color: #444;
-      overflow-x: hidden;
+    .photo-frame{
+      position:relative;width:100%;max-width:480px
+    }
+    .photo-frame::before{
+      content:'';position:absolute;inset:-10px;
+      border-radius:30px;
+      background:linear-gradient(135deg,var(--rose),var(--purple));
+      opacity:0.35;z-index:0;
+      animation:shimmer 3s ease-in-out infinite alternate
+    }
+    @keyframes shimmer{from{opacity:0.25;transform:scale(0.99)}to{opacity:0.5;transform:scale(1.01)}}
+
+    .moment-photo{
+      position:relative;z-index:1;
+      width:100%;aspect-ratio:4/5;object-fit:cover;
+      border-radius:24px;
+      box-shadow:0 20px 60px rgba(240,98,146,0.32);
+      transition:transform 0.45s ease,box-shadow 0.45s ease;
+      cursor:pointer;display:block
+    }
+    .moment-photo:hover{
+      transform:scale(1.03) rotate(-1.2deg);
+      box-shadow:0 28px 72px rgba(240,98,146,0.42)
     }
 
-    /* ── PARTÍCULAS ─────────────────────────── */
-    #particles-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
+    /* BADGE no canto da foto */
+    .photo-badge{
+      position:absolute;top:-14px;right:-14px;z-index:2;
+      background:linear-gradient(135deg,var(--rose),var(--purple));
+      color:var(--white);font-size:0.68rem;letter-spacing:1.4px;
+      text-transform:uppercase;font-weight:700;
+      padding:6px 14px;border-radius:999px;
+      box-shadow:0 4px 14px rgba(240,98,146,0.45)
     }
 
-    /* ── HERO ───────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      background: linear-gradient(160deg, #f48fb1 0%, #ce93d8 60%, #f06292 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 24px;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
+    /* CARD FRASE */
+    .moment-card{
+      background:var(--white);border-radius:22px;
+      padding:34px 30px 28px;
+      box-shadow:0 8px 36px rgba(240,98,146,0.11);
+      border-left:5px solid var(--rose);
+      max-width:480px;width:100%;position:relative;
+      overflow:visible
+    }
+    .moment-card::before{
+      content:'\201C';font-family:'Playfair Display',serif;
+      font-size:6rem;color:var(--peach);
+      position:absolute;top:-20px;left:14px;line-height:1
+    }
+    .moment-text{
+      font-family:'Playfair Display',serif;
+      font-size:1.12rem;line-height:1.85;
+      color:#3a3a3a;font-style:italic
+    }
+    .moment-author{
+      margin-top:14px;font-size:0.82rem;
+      color:#c78;letter-spacing:0.5px
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    /* BANNER DESTAQUE */
+    .banner{
+      position:relative;border-radius:26px;overflow:hidden;
+      padding:0;margin:8px 0 32px;
+      opacity:0;transform:translateY(44px);
+      transition:opacity 0.8s ease,transform 0.8s ease
+    }
+    .banner.visible{opacity:1;transform:translateY(0)}
+    .banner-bg{
+      position:absolute;inset:0;
+      background:linear-gradient(140deg,#f06292 0%,#ce93d8 55%,#f48fb1 100%);
+      z-index:0
+    }
+    .banner-bg::after{
+      content:'';position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='3' fill='white' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E")
+    }
+    .banner-content{
+      position:relative;z-index:1;
+      padding:52px 32px;text-align:center
+    }
+    .banner-content p{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.05rem,3.5vw,1.45rem);
+      color:var(--white);line-height:1.9;font-style:italic
+    }
+    .banner-content span{
+      display:block;margin-top:18px;
+      font-size:0.82rem;color:rgba(255,255,255,0.72);
+      font-family:'Lato',sans-serif;font-style:normal;letter-spacing:0.4px
     }
 
-    .hero-emoji {
-      font-size: 3.8rem;
-      animation: bounce 2s infinite;
-      display: block;
-      margin-bottom: 18px;
+    /* GALERIA MOSAICO */
+    .gallery-section{
+      padding:40px 0 56px;
+      opacity:0;transform:translateY(44px);
+      transition:opacity 0.8s ease,transform 0.8s ease
+    }
+    .gallery-section.visible{opacity:1;transform:translateY(0)}
+    .section-title{
+      text-align:center;font-family:'Dancing Script',cursive;
+      font-size:2.4rem;color:var(--deep);margin-bottom:4px
+    }
+    .section-sub{text-align:center;font-size:0.88rem;color:#bbb;margin-bottom:30px}
+    .mosaic{columns:2;column-gap:10px}
+    .mosaic img{
+      width:100%;margin-bottom:10px;border-radius:16px;
+      display:block;object-fit:cover;
+      transition:transform 0.35s ease,box-shadow 0.35s ease;cursor:pointer
+    }
+    .mosaic img:hover{transform:scale(1.04);box-shadow:0 14px 38px rgba(240,98,146,0.38)}
+
+    /* LIGHTBOX */
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 0 80px rgba(240,98,146,0.55)}
+    .lb-close{position:absolute;top:20px;right:24px;background:none;border:none;color:white;font-size:2.8rem;cursor:pointer;line-height:1}
+    .lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:white;font-size:2rem;cursor:pointer;padding:12px 16px;border-radius:12px;backdrop-filter:blur(6px)}
+    .lb-prev{left:12px}.lb-next{right:12px}
+
+    /* CARTA */
+    .letter{
+      background:var(--white);border-radius:26px;
+      padding:52px 34px;margin:20px 0 40px;
+      box-shadow:0 10px 44px rgba(240,98,146,0.13);
+      opacity:0;transform:translateY(44px);
+      transition:opacity 0.8s ease,transform 0.8s ease;
+      position:relative;overflow:hidden
+    }
+    .letter::before{
+      content:'💌';position:absolute;top:22px;right:26px;
+      font-size:2.2rem;opacity:0.15
+    }
+    .letter.visible{opacity:1;transform:translateY(0)}
+    .letter-header{
+      font-family:'Dancing Script',cursive;font-size:2rem;
+      color:var(--deep);margin-bottom:22px
+    }
+    .letter p{font-size:1.02rem;line-height:2;color:#555;margin-bottom:18px}
+    .letter-sign{
+      font-family:'Dancing Script',cursive;font-style:normal;
+      font-size:1.6rem;color:var(--rose);margin-top:26px
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-14px); }
+    /* QR */
+    .qr-section{
+      padding:56px 0 44px;text-align:center;
+      opacity:0;transform:translateY(44px);
+      transition:opacity 0.8s ease,transform 0.8s ease
+    }
+    .qr-section.visible{opacity:1;transform:translateY(0)}
+    .qr-title{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--deep);margin-bottom:6px}
+    .qr-sub{font-size:0.88rem;color:#bbb;margin-bottom:28px}
+    #qrcode{margin:0 auto;width:180px;height:180px;padding:14px;background:white;border-radius:18px;box-shadow:0 8px 34px rgba(240,98,146,0.22)}
+
+    /* FOOTER */
+    footer{text-align:center;padding:44px 20px 60px;font-size:0.85rem;color:#ccc;position:relative;z-index:1}
+    footer strong{color:var(--rose)}
+    .footer-hearts{font-size:1.3rem;display:block;margin-bottom:8px;animation:heartbeat 2s ease-in-out infinite}
+
+    /* SPARKLES */
+    .sparkle{
+      position:absolute;pointer-events:none;z-index:2;
+      animation:sparkle-anim 0.7s ease forwards
+    }
+    @keyframes sparkle-anim{
+      0%{opacity:1;transform:scale(0) rotate(0deg)}
+      60%{opacity:1;transform:scale(1.2) rotate(180deg)}
+      100%{opacity:0;transform:scale(0) rotate(360deg)}
     }
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 8vw, 3.4rem);
-      color: var(--white);
-      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-      line-height: 1.25;
-      max-width: 560px;
-      animation: fadeInUp 1s ease 0.3s both;
-    }
-
-    .hero-sub {
-      margin-top: 20px;
-      font-size: 1.05rem;
-      color: rgba(255,255,255,0.9);
-      max-width: 420px;
-      line-height: 1.75;
-      font-weight: 300;
-      animation: fadeInUp 1s ease 0.7s both;
-    }
-
-    .scroll-hint {
-      margin-top: 52px;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.85rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      animation: fadeInUp 2s ease 1.5s both;
-    }
-
-    .scroll-hint svg {
-      width: 24px; height: 24px;
-      animation: arrowBounce 1.5s infinite;
-    }
-
-    @keyframes arrowBounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50%       { transform: translateY(7px); opacity: 0.5; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── WRAP ───────────────────────────────── */
-    .wrap {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── MOMENTO (foto + frase) ─────────────── */
-    .moment {
-      padding: 64px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      opacity: 0;
-      transform: translateY(42px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .moment.visible { opacity: 1; transform: translateY(0); }
-
-    .moment-photo {
-      width: 100%;
-      max-width: 480px;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      border-radius: 24px;
-      box-shadow: 0 18px 52px rgba(240,98,146,0.28);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      cursor: pointer;
-    }
-
-    .moment-photo:hover {
-      transform: scale(1.025) rotate(-1deg);
-      box-shadow: 0 26px 68px rgba(240,98,146,0.38);
-    }
-
-    .moment-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 30px 28px 28px;
-      box-shadow: 0 8px 32px rgba(240,98,146,0.11);
-      border-left: 5px solid var(--rose);
-      max-width: 480px;
-      width: 100%;
-      position: relative;
-    }
-
-    .moment-card::before {
-      content: '\201C';
-      font-family: 'Playfair Display', serif;
-      font-size: 5.5rem;
-      color: var(--peach);
-      position: absolute;
-      top: -14px;
-      left: 16px;
-      line-height: 1;
-    }
-
-    .moment-tag {
-      display: inline-block;
-      background: var(--peach);
-      color: var(--deep);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-    }
-
-    .moment-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.13rem;
-      line-height: 1.8;
-      color: #3a3a3a;
-      font-style: italic;
-    }
-
-    /* ── DIVISOR ────────────────────────────── */
-    .divider {
-      text-align: center;
-      padding: 8px 0;
-      font-size: 1.5rem;
-      color: var(--rose);
-      opacity: 0.45;
-    }
-
-    /* ── BANNER DESTAQUE ────────────────────── */
-    .highlight-banner {
-      background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
-      border-radius: 24px;
-      padding: 52px 32px;
-      text-align: center;
-      margin: 16px 0 32px;
-      opacity: 0;
-      transform: translateY(42px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .highlight-banner.visible { opacity: 1; transform: translateY(0); }
-
-    .highlight-banner p {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.05rem, 3.5vw, 1.45rem);
-      color: var(--white);
-      line-height: 1.85;
-      font-style: italic;
-    }
-
-    .highlight-banner span {
-      display: block;
-      margin-top: 18px;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      font-family: 'Lato', sans-serif;
-      font-style: normal;
-      letter-spacing: 0.4px;
-    }
-
-    /* ── GALERIA MOSAICO ───────────────────── */
-    .gallery-section {
-      padding: 40px 0 56px;
-      opacity: 0;
-      transform: translateY(42px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .gallery-section.visible { opacity: 1; transform: translateY(0); }
-
-    .section-title {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.85rem;
-      color: var(--deep);
-      margin-bottom: 6px;
-    }
-
-    .section-sub {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-
-    .mosaic { columns: 2; column-gap: 10px; }
-
-    .mosaic img {
-      width: 100%;
-      margin-bottom: 10px;
-      border-radius: 16px;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .mosaic img:hover {
-      transform: scale(1.035);
-      box-shadow: 0 14px 36px rgba(240,98,146,0.35);
-    }
-
-    /* ── LIGHTBOX ───────────────────────────── */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .lightbox.open { display: flex; }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 16px;
-      box-shadow: 0 0 70px rgba(240,98,146,0.5);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 20px; right: 24px;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2.8rem;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    /* ── CARTA FINAL ────────────────────────── */
-    .letter {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 48px 32px;
-      margin: 24px 0 40px;
-      box-shadow: 0 8px 40px rgba(240,98,146,0.13);
-      opacity: 0;
-      transform: translateY(42px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .letter.visible { opacity: 1; transform: translateY(0); }
-
-    .letter-header {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--deep);
-      margin-bottom: 22px;
-    }
-
-    .letter p {
-      font-size: 1rem;
-      line-height: 1.95;
-      color: #555;
-      margin-bottom: 16px;
-    }
-
-    .letter-sign {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.3rem;
-      color: var(--rose);
-      margin-top: 24px;
-    }
-
-    /* ── QR CODE ─────────────────────────────── */
-    .qr-section {
-      padding: 56px 0 44px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(42px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .qr-section.visible { opacity: 1; transform: translateY(0); }
-
-    .qr-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--deep);
-      margin-bottom: 8px;
-    }
-
-    .qr-section p {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 28px;
-    }
-
-    #qrcode {
-      margin: 0 auto;
-      width: 180px;
-      height: 180px;
-      padding: 14px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(240,98,146,0.2);
-    }
-
-    /* ── FOOTER ──────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 40px 20px 56px;
-      font-size: 0.85rem;
-      color: #ccc;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer strong { color: var(--rose); }
+    /* PROGRESS BAR TOPO */
+    #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--rose),var(--purple),var(--gold));width:0%;z-index:999;transition:width 0.1s linear}
   </style>
 </head>
 <body>
 
-<canvas id="particles-canvas"></canvas>
+<div id="progress"></div>
+<canvas id="bg-canvas"></canvas>
 
-<!-- ══ HERO ══════════════════════════════════════════════ -->
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
+  <p class="hero-date">08 de Março de 2026 • Dia Internacional da Mulher</p>
   <span class="hero-emoji">💖</span>
-  <h1>Feliz Dia das Mulheres,<br>Mozinho!</h1>
+  <h1>Para a minha mulher favorita no mundo inteiro</h1>
   <p class="hero-sub">
-    Hoje o mundo para para celebrar a mulher mais incrível da minha vida.
-    Cada momento contigo é um presente que eu nunca vou parar de agradecer.
+    Não precisa ser um dia especial pra eu pensar em você —
+    mas hoje o mundo inteiro para pra celebrar alguém exatamente como você.
+    E eu não podia deixar passar em branco.
   </p>
+  <div class="typewriter" id="typewriter"></div>
   <div class="scroll-hint">
-    <span>Role para baixo</span>
+    <span>Role para baixo, tem surpresas 🎀</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
   </div>
 </section>
 
-<!-- ══ CONTEÚDO ══════════════════════════════════════════ -->
+<!-- ══ CONTEÚDO ════════════════════════════════════════════ -->
 <div class="wrap">
 
   <!-- Momento 1 -->
   <div class="moment" data-reveal>
-    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós juntos" />
+    <div class="photo-frame">
+      <span class="photo-badge">🌸 Você me inspira</span>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós juntos"/>
+    </div>
     <div class="moment-card">
-      <span class="moment-tag">✨ Você me inspira</span>
       <p class="moment-text">
-        "Feliz Dia das Mulheres para a dona do meu coração e a protagonista da minha vida.
-        Todos os dias eu acordo com a certeza de que tirei a sorte grande."
+        "Tem dias que eu só precisei te olhar pra lembrar por que vale a pena.
+        Você tem esse jeito de transmitir calma até nas situações mais caóticas,
+        e isso é um dos milhares de motivos pelo qual eu me apaixono por você de novo todo dia."
       </p>
+      <p class="moment-author">— com muito amor 💕</p>
     </div>
   </div>
 
-  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
+  <div class="ribbon">✦ ✦ ✦</div>
 
   <!-- Momento 2 -->
   <div class="moment" data-reveal>
-    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Nós juntos" />
+    <div class="photo-frame">
+      <span class="photo-badge">☀️ Minha luz</span>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Nós juntos"/>
+    </div>
     <div class="moment-card">
-      <span class="moment-tag">🌸 Minha luz</span>
       <p class="moment-text">
-        "Você não é só a minha namorada — é a mulher que ilumina meus dias,
-        me inspira a ser alguém melhor e enche a minha vida de cor e de sentido."
+        "Você não é só bonita — você tem uma beleza que vem de dentro, sabe?
+        Aquela que aparece quando você sorri sem querer, quando se preocupa com as pessoas
+        que ama, quando resolve uma situação difícil com aquela leveza que só você tem.
+        Eu te admiro demais."
       </p>
+      <p class="moment-author">— sempre seu fã número um 🌟</p>
     </div>
   </div>
 
-  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
-
   <!-- Banner 1 -->
-  <div class="highlight-banner" data-reveal>
-    <p>
-      "Sua doçura, sua inteligência e a forma como você cuida da gente
-      são as coisas mais preciosas que eu tenho.
-      Hoje o dia é seu — mas o presente de ter você é todo meu."
-    </p>
-    <span>— Para você, com todo o meu amor 💕</span>
+  <div class="banner" data-reveal>
+    <div class="banner-bg"></div>
+    <div class="banner-content">
+      <p>
+        "Sabe aquela sensação de chegar em casa cansado, cheio de estresse,
+        e de repente tudo some? É o que acontece quando estou com você.
+        Você é o meu lugar favorito no mundo."
+      </p>
+      <span>— 8 de Março de 2026 💜</span>
+    </div>
   </div>
 
   <!-- Momento 3 -->
   <div class="moment" data-reveal>
-    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós juntos" />
+    <div class="photo-frame">
+      <span class="photo-badge">🤝 Minha parceira</span>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós juntos"/>
+    </div>
     <div class="moment-card">
-      <span class="moment-tag">🤝 Minha parceira</span>
       <p class="moment-text">
-        "Ter uma mulher incrível como você, que me apoia nos meus objetivos,
-        se preocupa com o meu crescimento e segura a minha mão nos momentos difíceis,
-        é o meu maior privilégio."
+        "A gente tem uma cumplicidade que não se explica, só se sente.
+        É na gargalhada que só a gente entende, no olhar que dispensa palavras,
+        no jeitinho que você sabe exatamente quando eu preciso de um abraço
+        — mesmo que eu seja cabeça dura demais pra pedir. Obrigado por me entender assim."
       </p>
+      <p class="moment-author">— grato todos os dias 🙏</p>
     </div>
   </div>
 
-  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
+  <div class="ribbon">✦ ✦ ✦</div>
 
   <!-- Momento 4 -->
   <div class="moment" data-reveal>
-    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Nós juntos" />
+    <div class="photo-frame">
+      <span class="photo-badge">💻 Nerd apaixonado</span>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Nós juntos"/>
+    </div>
     <div class="moment-card">
-      <span class="moment-tag">💻 Nerd apaixonado</span>
       <p class="moment-text">
-        "Se eu pudesse programar a mulher perfeita, ainda assim não chegaria nem perto
-        de você. Nenhuma linha de código seria capaz de replicar a sua essência.
-        Você é o meu projeto favorito para a vida inteira."
+        "Eu trabalho com código o dia todo, resolvo problemas complexos,
+        mas nunca consegui descrever em lógica o que sinto por você.
+        Sabe por quê? Porque o que existe entre a gente não tem bug,
+        não tem gambiarra — é a coisa mais genuína que já experimentei."
       </p>
+      <p class="moment-author">— seu dev favorito 👨‍💻</p>
     </div>
   </div>
 
-  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
+  <div class="ribbon">✦ ✦ ✦</div>
 
   <!-- Momento 5 -->
   <div class="moment" data-reveal>
-    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós juntos" />
+    <div class="photo-frame">
+      <span class="photo-badge">🌟 Todo meu respeito</span>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós juntos"/>
+    </div>
     <div class="moment-card">
-      <span class="moment-tag">🌟 Toda minha admiração</span>
       <p class="moment-text">
-        "Hoje é dia de celebrar a força, a garra e a delicadeza que fazem de você
-        essa mulher espetacular. Que orgulho imenso eu tenho de poder chamar
-        uma guerreira tão incrível de 'meu amor'."
+        "Que orgulho eu tenho de você — da mulher que você é, da força que você carrega,
+        da forma como enfrenta cada desafio com a cabeça erguida.
+        Você inspira as pessoas ao redor só de existir, e talvez você nem perceba isso.
+        Mas eu percebo. Sempre."
       </p>
+      <p class="moment-author">— seu maior torcedor 💪</p>
     </div>
   </div>
 
   <!-- Banner 2 -->
-  <div class="highlight-banner" data-reveal>
-    <p>
-      "Obrigado por ser meu porto seguro, minha parceira e por não desistir da gente.
-      Ao seu lado, eu sei que posso conquistar qualquer coisa."
-    </p>
-    <span>— Seu mozão, para sempre 💜</span>
+  <div class="banner" data-reveal>
+    <div class="banner-bg"></div>
+    <div class="banner-content">
+      <p>
+        "Obrigado por não desistir da gente nos momentos difíceis,
+        por ser honesta comigo mesmo quando dói,
+        e por me fazer querer ser uma versão melhor de mim mesmo todo dia.
+        Você faz tudo isso sem nem perceber — e é exatamente isso que eu mais amo em você."
+      </p>
+      <span>— para a vida toda 💍</span>
+    </div>
   </div>
 
-  <!-- ══ GALERIA ════════════════════════════ -->
+  <!-- ══ GALERIA ════════════════════════════════════════════ -->
   <div class="gallery-section" data-reveal>
-    <h2 class="section-title">Nossa História em Fotos</h2>
-    <p class="section-sub">Cada imagem é um capítulo que eu guardo no coração 📷</p>
+    <h2 class="section-title">Nossa história, quadro a quadro</h2>
+    <p class="section-sub">Cada foto é um momento que eu não trocaria por nada. Clique para ampliar 📷</p>
     <div class="mosaic" id="mosaic"></div>
   </div>
 
-  <!-- ══ CARTA FINAL ════════════════════════ -->
+  <!-- ══ CARTA ══════════════════════════════════════════════ -->
   <div class="letter" data-reveal>
-    <p class="letter-header">Para você, especialmente hoje,</p>
+    <p class="letter-header">Uma cartinha só pra você,</p>
     <p>
-      Às vezes faltam palavras para descrever tudo que sinto, mas hoje eu preciso tentar.
-      Você transforma o meu comum em extraordinário — mesmo nos dias mais simples,
-      do seu lado tudo tem um sabor diferente, mais leve e mais bonito.
+      Hoje eu queria escrever algo que fizesse jus a tudo que você representa pra mim,
+      mas a verdade é que não existe palavra grande o suficiente.
+      Então vou ser simples: você me faz bem. Do jeito mais honesto e real possível.
     </p>
     <p>
-      Admiro a sua resiliência, a sua capacidade de se importar genuinamente com as pessoas
-      ao seu redor, e a luz enorme que você carrega consigo.
-      Hoje e sempre, quero que você se sinta tão amada, valorizada e respeitada quanto merece.
+      Quando eu penso no futuro, você está em todos os frames.
+      Não porque eu precise de você pra existir — mas porque, com você,
+      tudo faz mais sentido. Os planos ficam mais empolgantes,
+      os problemas ficam menores, e aquelas coisas simples do dia a dia
+      viram as memórias que eu mais vou querer guardar.
     </p>
     <p>
-      "Que hoje, amanhã e sempre você se sinta tão especial
-      quanto é — porque você merece tudo de melhor que esse mundo tem a oferecer.
-      Meu coração é 100 % seu."
+      Então, no dia em que o mundo celebra as mulheres,
+      eu só quero que você saiba: o meu mundo
+      ficou infinitamente melhor quando você entrou nele.
+      Feliz Dia das Mulheres, mozinho. 
+      Hoje e sempre.
     </p>
     <p class="letter-sign">Com todo o meu amor, seu mozão 💖</p>
   </div>
 
-  <!-- ══ QR CODE ════════════════════════════ -->
+  <!-- ══ QR CODE ════════════════════════════════════════════ -->
   <div class="qr-section" data-reveal>
-    <h2>Guarde esse momento</h2>
-    <p>Escaneie e salve essa página para ler sempre que quiser 💕</p>
+    <p class="qr-title">Guarda esse momento</p>
+    <p class="qr-sub">Escaneie e salve — pra ler sempre que quiser sentir que é amada 💕</p>
     <div id="qrcode"></div>
   </div>
 
@@ -546,30 +456,39 @@
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightbox-close">&times;</button>
-  <img id="lightbox-img" src="" alt="" />
+  <button class="lb-close" id="lb-close">&times;</button>
+  <button class="lb-prev" id="lb-prev">&#8249;</button>
+  <img id="lb-img" src="" alt=""/>
+  <button class="lb-next" id="lb-next">&#8250;</button>
 </div>
 
 <footer>
-  Feito com <strong>muito amor</strong> especialmente para você &nbsp;💖
+  <span class="footer-hearts">💖 💕 💖</span>
+  Feito com <strong>muito amor</strong>, especialmente pra você.
 </footer>
 
-<!-- ─── SCRIPTS ──────────────────────────────────────────── -->
+<!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-/* ── QR Code ─────────────────────────────── */
+/* ── QR Code ─────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   new QRCode(document.getElementById('qrcode'), {
     text: window.location.href,
-    width: 152,
-    height: 152,
+    width: 152, height: 152,
     colorDark: '#880e4f',
     colorLight: '#ffffff',
     correctLevel: QRCode.CorrectLevel.H
   });
 });
 
-/* ── Galeria mosaico ─────────────────────── */
+/* ── Progress bar ────────────────── */
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('progress');
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  el.style.width = pct + '%';
+});
+
+/* ── Galeria mosaico ─────────────── */
 const allPhotos = [
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
@@ -602,77 +521,129 @@ const allPhotos = [
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
 ];
 
+let lbIndex = 0;
 const mosaic = document.getElementById('mosaic');
-allPhotos.forEach(src => {
+allPhotos.forEach((src, i) => {
   const img = document.createElement('img');
-  img.src = src;
-  img.alt = 'Memória nossa';
-  img.loading = 'lazy';
-  img.addEventListener('click', () => openLightbox(src));
+  img.src = src; img.alt = 'Memória nossa'; img.loading = 'lazy';
+  img.addEventListener('click', () => openLb(i));
   mosaic.appendChild(img);
 });
 
-/* ── Lightbox ────────────────────────────── */
-function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
+/* ── Lightbox com navegação ──────── */
+function openLb(i) {
+  lbIndex = i;
+  document.getElementById('lb-img').src = allPhotos[i];
   document.getElementById('lightbox').classList.add('open');
 }
-document.getElementById('lightbox-close').addEventListener('click', () => {
-  document.getElementById('lightbox').classList.remove('open');
-});
-document.getElementById('lightbox').addEventListener('click', e => {
-  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+document.getElementById('lb-close').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('lb-prev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });
+document.getElementById('lb-next').addEventListener('click', () => { lbIndex = (lbIndex + 1) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+  if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
 
-/* ── Scroll reveal ───────────────────────── */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
+/* ── Scroll reveal ───────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
 }, { threshold: 0.1 });
-document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
-/* ── Corações flutuantes ─────────────────── */
+/* ── Typewriter ──────────────────── */
+const phrases = [
+  "Feliz Dia das Mulheres, meu amor ❤️",
+  "Você é o meu lar favorito 🏡",
+  "Hoje e sempre, você é especial 🌸",
+  "Obrigado por existir na minha vida 💫",
+];
+let pi = 0, ci = 0, deleting = false;
+function type() {
+  const el = document.getElementById('typewriter');
+  const cur = phrases[pi];
+  if (!deleting) {
+    el.textContent = cur.slice(0, ++ci);
+    if (ci === cur.length) { deleting = true; setTimeout(type, 2200); return; }
+  } else {
+    el.textContent = cur.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 48 : 72);
+}
+setTimeout(type, 1800);
+
+/* ── Sparkle no clique ───────────── */
+document.addEventListener('click', e => {
+  for (let i = 0; i < 7; i++) {
+    const sp = document.createElement('span');
+    sp.className = 'sparkle';
+    sp.textContent = ['✨','💖','🌸','⭐','💫'][Math.floor(Math.random() * 5)];
+    const size = Math.random() * 18 + 14;
+    sp.style.cssText = `left:${e.clientX + (Math.random()-0.5)*60}px;top:${e.clientY + window.scrollY + (Math.random()-0.5)*60}px;font-size:${size}px`;
+    document.body.appendChild(sp);
+    setTimeout(() => sp.remove(), 750);
+  }
+});
+
+/* ── Corações + estrelas flutuantes ─ */
 (function() {
-  const canvas = document.getElementById('particles-canvas');
+  const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-
   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   resize();
   window.addEventListener('resize', resize);
 
-  const hearts = Array.from({ length: 24 }, () => ({
-    x:     Math.random() * window.innerWidth,
-    y:     Math.random() * window.innerHeight,
-    size:  Math.random() * 13 + 7,
-    speed: Math.random() * 0.55 + 0.18,
-    alpha: Math.random() * 0.35 + 0.08,
-    drift: (Math.random() - 0.5) * 0.4
-  }));
+  const particles = Array.from({ length: 36 }, () => mkParticle());
+  function mkParticle() {
+    return {
+      x:     Math.random() * window.innerWidth,
+      y:     Math.random() * window.innerHeight + window.innerHeight,
+      type:  Math.random() > 0.5 ? 'heart' : 'star',
+      size:  Math.random() * 12 + 6,
+      speed: Math.random() * 0.6 + 0.15,
+      alpha: Math.random() * 0.3 + 0.06,
+      drift: (Math.random() - 0.5) * 0.45,
+      rot:   Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.02
+    };
+  }
 
   function drawHeart(x, y, s, a) {
-    ctx.save();
-    ctx.globalAlpha = a;
-    ctx.fillStyle = '#f06292';
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#f06292';
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.bezierCurveTo(x, y - s/2, x - s, y - s/2, x - s, y);
-    ctx.bezierCurveTo(x - s, y + s * 0.6, x, y + s * 1.1, x, y + s * 1.3);
-    ctx.bezierCurveTo(x, y + s * 1.1, x + s, y + s * 0.6, x + s, y);
+    ctx.bezierCurveTo(x - s, y + s*0.6, x, y + s*1.1, x, y + s*1.3);
+    ctx.bezierCurveTo(x, y + s*1.1, x + s, y + s*0.6, x + s, y);
     ctx.bezierCurveTo(x + s, y - s/2, x, y - s/2, x, y);
-    ctx.fill();
-    ctx.restore();
+    ctx.fill(); ctx.restore();
+  }
+
+  function drawStar(x, y, s, a, rot) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#f9d423';
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+      const ang = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+      const r = i % 2 === 0 ? s : s * 0.42;
+      ctx[i === 0 ? 'moveTo' : 'lineTo'](r * Math.cos(ang), r * Math.sin(ang));
+    }
+    ctx.closePath(); ctx.fill(); ctx.restore();
   }
 
   function tick() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hearts.forEach(h => {
-      drawHeart(h.x, h.y, h.size, h.alpha);
-      h.y -= h.speed; h.x += h.drift; h.alpha -= 0.0004;
-      if (h.y < -30 || h.alpha <= 0) {
-        h.y = canvas.height + 20;
-        h.x = Math.random() * canvas.width;
-        h.alpha = Math.random() * 0.35 + 0.08;
+    particles.forEach(p => {
+      if (p.type === 'heart') drawHeart(p.x, p.y, p.size, p.alpha);
+      else drawStar(p.x, p.y, p.size, p.alpha, p.rot);
+      p.y -= p.speed; p.x += p.drift; p.rot += p.rotSpeed; p.alpha -= 0.00025;
+      if (p.y < -40 || p.alpha <= 0) {
+        Object.assign(p, mkParticle());
+        p.y = canvas.height + 20; p.x = Math.random() * canvas.width;
+        p.alpha = Math.random() * 0.3 + 0.06;
       }
     });
     requestAnimationFrame(tick);
