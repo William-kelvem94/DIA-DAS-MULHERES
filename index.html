@@ -281,6 +281,13 @@
 
     /* FOOTER */
     footer{text-align:center;padding:44px 20px 60px;font-size:0.85rem;color:rgba(255,255,255,0.6);position:relative;z-index:1}
+    /* toast message */
+    #toast{
+      position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,0.75);color:#fff;padding:12px 24px;border-radius:24px;
+      opacity:0;pointer-events:none;transition:opacity 0.3s ease;
+      z-index:1002;font-size:0.9rem;
+    }
     footer strong{color:var(--rose)}
     .footer-hearts{font-size:1.3rem;display:block;margin-bottom:8px;animation:heartbeat 2s ease-in-out infinite}
 
@@ -307,10 +314,10 @@
 
 <div id="progress"></div>
 <canvas id="bg-canvas"></canvas>
-<button id="music-btn">▶️</button>
+<button id="music-btn" aria-label="Abrir refrão no YouTube">▶️</button>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
-<section class="hero">
+<section class="hero" role="banner">
   <p class="hero-date">08 de Março de 2026 • Dia Internacional da Mulher</p>
   <h1>Para a Maria Gabriele, minha mulher favorita no mundo inteiro</h1>
   <p class="hero-sub">
@@ -328,13 +335,13 @@
 </section>
 
 <!-- ══ CONTEÚDO ════════════════════════════════════════════ -->
-<div class="wrap">
+<div class="wrap" role="main">
 
   <!-- Momento 1 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">� Minha inspiração</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós sorrindo juntos"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -352,7 +359,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">� Lado a lado</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Nós juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Abraço nosso"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -381,7 +388,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">🧑‍💻 Meu melhor projeto</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós de mãos dadas"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -400,7 +407,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">� Meu porto seguro</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Nós juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Abraço acolhedor"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -418,7 +425,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">🌟 Todo meu respeito</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós felizes"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -479,7 +486,7 @@
   <div class="qr-section" data-reveal>
     <p class="qr-title">Guarda esse momento</p>
     <p class="qr-sub">Escaneie e salve, pra ler sempre que quiser sentir que é amada 💕</p>
-    <div id="qrcode"></div>
+    <div id="qrcode" aria-label="QR code para abrir esta página"></div>
   </div>
 
 </div><!-- /wrap -->
@@ -499,6 +506,7 @@
 
 <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<div id="toast">Link copiado!</div>
 <script>
 /* ── QR Code ─────────────────────── */
 
@@ -507,6 +515,21 @@ const btn = document.getElementById('music-btn');
 const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
 btn.addEventListener('click', () => {
   window.open(videoUrl, '_blank');
+});
+
+// toast utility
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  setTimeout(() => { t.style.opacity = '0'; }, 1800);
+}
+
+// click QR copy url + show toast
+const qrcodeContainer = document.getElementById('qrcode');
+qrcodeContainer.addEventListener('click', () => {
+  const link = window.location.href;
+  navigator.clipboard.writeText(link).then(() => showToast('Link copiado!'));
 });
 
 
