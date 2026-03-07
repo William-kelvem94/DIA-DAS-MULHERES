@@ -15,8 +15,9 @@
       --cream:#121212;--purple:#4a148c;--white:#e0e0e0;
       --gold:#ffb300;
     }
-    html{scroll-behavior:smooth;font-size:18px}
-    body{line-height:1.65}
+    html{scroll-behavior:smooth;font-size:18px;overflow-x:hidden}
+    body{line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    .wrap{overflow-x:hidden}
     body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--white);overflow-x:hidden}
 
     /* CANVAS FUNDO */
@@ -281,9 +282,7 @@
 
 <div id="progress"></div>
 <canvas id="bg-canvas"></canvas>
-<!-- iframe escondido tocando o refrão automaticamente -->
-<iframe id="bg-video" src="https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=1&loop=1&controls=0&mute=0&playlist=YQ-qToZUybM" style="display:none;"></iframe>
-<button id="music-btn">🎵</button>
+<button id="music-btn">▶️</button>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
@@ -479,19 +478,11 @@
 <script>
 /* ── QR Code ─────────────────────── */
 
-// controlar reprodução via iframe e texto do botão
+// abrir YouTube em nova aba direto no refrão ao clicar
 const btn = document.getElementById('music-btn');
-const iframe = document.getElementById('bg-video');
-let muted = false;
+const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
 btn.addEventListener('click', () => {
-  muted = !muted;
-  // YouTube embed requires postMessage to mute/unmute
-  iframe.contentWindow.postMessage('{"event":"command","func":"' + (muted? 'mute' : 'unMute') + '","args":""}', '*');
-  btn.textContent = muted ? '🔇' : '🎵';
-});
-// try to unmute after user interaction if autoplay blocked
-document.addEventListener('click', () => {
-  iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+  window.open(videoUrl, '_blank');
 });
 
 
