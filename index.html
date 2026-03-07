@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia das Mulheres</title>
+    <style>
+        /* reset básico */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeInDown 1.2s ease-out;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        section {
+            margin: 30px 0;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .photos {
+            position: relative;
+            width: 100%;
+            padding-top: 150%; /* proporção vertical */
+            overflow: hidden;
+        }
+        .photos img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: slideShow 12s infinite;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .photos img:nth-child(1) { animation-delay: 0s; }
+        .photos img:nth-child(2) { animation-delay: 4s; }
+        .photos img:nth-child(3) { animation-delay: 8s; }
+        @keyframes slideShow {
+            0% { opacity: 0; transform: scale(1.1); }
+            10% { opacity: 1; transform: scale(1); }
+            30% { opacity: 1; }
+            40% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 0; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .confetti {
+            pointer-events: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        #qrcode {
+            margin: 40px auto;
+            width: 180px;
+            height: 180px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="confetti" id="confettiCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>Feliz Dia das Mulheres, meu amor!</h1>
+        </header>
+        <section class="photos">
+            <!-- slideshow simples com algumas fotos fixas -->
+            <img src="photo1.jpg" alt="Nós juntos 1">
+            <img src="photo2.jpg" alt="Nós juntos 2">
+            <img src="photo3.jpg" alt="Nós juntos 3">
+        </section>
+        
+        <section class="gallery" id="gallery">
+            <!-- galeria dinâmica carregada via JavaScript -->
+        </section>
+        <section class="message">
+            <p>Hoje é um dia especial para celebrar você e tudo que você é. <br>
+            Cada momento ao seu lado é uma bênção, e eu quero que saiba o quanto você é amada e admirada.</p>
+            <p>Que este dia seja repleto de sorrisos, abraços e lembranças inesquecíveis. <br>
+            Te amo mais do que palavras podem dizer!</p>
+        </section>
+        <section id="qrcode"></section>
+        <footer>
+            Abra a câmera do celular no QR code e veja esta página novamente sempre que quiser.
+        </footer>
+    </div>
+
+    <!-- biblioteca de QR Code (https://davidshimjs.github.io/qrcodejs/) -->
+    <script>
+        // geração de QR com a url atual
+        window.addEventListener('DOMContentLoaded', () => {
+            const qrcodeContainer = document.getElementById('qrcode');
+            const url = window.location.href;
+            new QRCode(qrcodeContainer, {
+                text: url,
+                width: 180,
+                height: 180
+            });
+        });
+
+        // confetti simples usando canvas
+        function launchConfetti() {
+            const end = Date.now() + 5 * 1000;
+            const colors = ['#bb0000', '#ffffff'];
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            function randomRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const now = Date.now();
+                if (now > end) return;
+                for (let i = 0; i < 100; i++) {
+                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+                    ctx.fillRect(randomRange(0, canvas.width), randomRange(0, canvas.height), 5, 10);
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        launchConfetti();
+
+        // montagem da galeria dinâmica
+        (function() {
+            const photos = [
+                // lista de arquivos copiadas automaticamente
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (4).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (4).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (4).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (5).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (4).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (2).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (3).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (4).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (5).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg",
+                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
+            ];
+            const gallery = document.getElementById('gallery');
+            photos.forEach(path => {
+                const img = document.createElement('img');
+                img.src = path;
+                img.alt = 'Foto de nós';
+                gallery.appendChild(img);
+            });
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>
