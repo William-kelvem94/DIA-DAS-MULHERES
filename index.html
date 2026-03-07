@@ -1,230 +1,684 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Dia das Mulheres</title>
-    <style>
-        /* reset básico */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: #333;
-            overflow-x: hidden;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 40px 0;
-            animation: fadeInDown 1.2s ease-out;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        section {
-            margin: 30px 0;
-            animation: fadeIn 1.5s ease-in;
-        }
-        .photos {
-            position: relative;
-            width: 100%;
-            padding-top: 150%; /* proporção vertical */
-            overflow: hidden;
-        }
-        .photos img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            animation: slideShow 12s infinite;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 8px;
-            margin: 20px 0;
-        }
-        .gallery img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-        .photos img:nth-child(1) { animation-delay: 0s; }
-        .photos img:nth-child(2) { animation-delay: 4s; }
-        .photos img:nth-child(3) { animation-delay: 8s; }
-        @keyframes slideShow {
-            0% { opacity: 0; transform: scale(1.1); }
-            10% { opacity: 1; transform: scale(1); }
-            30% { opacity: 1; }
-            40% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 0; }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .message {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            text-align: center;
-        }
-        .confetti {
-            pointer-events: none;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-        #qrcode {
-            margin: 40px auto;
-            width: 180px;
-            height: 180px;
-        }
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            font-size: 0.9rem;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖 Feliz Dia das Mulheres, Mozinho!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --rose:   #f06292;
+      --peach:  #fce4ec;
+      --deep:   #880e4f;
+      --cream:  #fff8f8;
+      --purple: #ce93d8;
+      --white:  #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: #444;
+      overflow-x: hidden;
+    }
+
+    /* ── PARTÍCULAS ─────────────────────────── */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #f48fb1 0%, #ce93d8 60%, #f06292 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-emoji {
+      font-size: 3.8rem;
+      animation: bounce 2s infinite;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      color: var(--white);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      line-height: 1.25;
+      max-width: 560px;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 420px;
+      line-height: 1.75;
+      font-weight: 300;
+      animation: fadeInUp 1s ease 0.7s both;
+    }
+
+    .scroll-hint {
+      margin-top: 52px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: fadeInUp 2s ease 1.5s both;
+    }
+
+    .scroll-hint svg {
+      width: 24px; height: 24px;
+      animation: arrowBounce 1.5s infinite;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50%       { transform: translateY(7px); opacity: 0.5; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── WRAP ───────────────────────────────── */
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── MOMENTO (foto + frase) ─────────────── */
+    .moment {
+      padding: 64px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .moment.visible { opacity: 1; transform: translateY(0); }
+
+    .moment-photo {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 18px 52px rgba(240,98,146,0.28);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+
+    .moment-photo:hover {
+      transform: scale(1.025) rotate(-1deg);
+      box-shadow: 0 26px 68px rgba(240,98,146,0.38);
+    }
+
+    .moment-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 30px 28px 28px;
+      box-shadow: 0 8px 32px rgba(240,98,146,0.11);
+      border-left: 5px solid var(--rose);
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    .moment-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5.5rem;
+      color: var(--peach);
+      position: absolute;
+      top: -14px;
+      left: 16px;
+      line-height: 1;
+    }
+
+    .moment-tag {
+      display: inline-block;
+      background: var(--peach);
+      color: var(--deep);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .moment-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.13rem;
+      line-height: 1.8;
+      color: #3a3a3a;
+      font-style: italic;
+    }
+
+    /* ── DIVISOR ────────────────────────────── */
+    .divider {
+      text-align: center;
+      padding: 8px 0;
+      font-size: 1.5rem;
+      color: var(--rose);
+      opacity: 0.45;
+    }
+
+    /* ── BANNER DESTAQUE ────────────────────── */
+    .highlight-banner {
+      background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+      border-radius: 24px;
+      padding: 52px 32px;
+      text-align: center;
+      margin: 16px 0 32px;
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .highlight-banner.visible { opacity: 1; transform: translateY(0); }
+
+    .highlight-banner p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.05rem, 3.5vw, 1.45rem);
+      color: var(--white);
+      line-height: 1.85;
+      font-style: italic;
+    }
+
+    .highlight-banner span {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Lato', sans-serif;
+      font-style: normal;
+      letter-spacing: 0.4px;
+    }
+
+    /* ── GALERIA MOSAICO ───────────────────── */
+    .gallery-section {
+      padding: 40px 0 56px;
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .gallery-section.visible { opacity: 1; transform: translateY(0); }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      color: var(--deep);
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .mosaic { columns: 2; column-gap: 10px; }
+
+    .mosaic img {
+      width: 100%;
+      margin-bottom: 10px;
+      border-radius: 16px;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .mosaic img:hover {
+      transform: scale(1.035);
+      box-shadow: 0 14px 36px rgba(240,98,146,0.35);
+    }
+
+    /* ── LIGHTBOX ───────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 16px;
+      box-shadow: 0 0 70px rgba(240,98,146,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ── CARTA FINAL ────────────────────────── */
+    .letter {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 48px 32px;
+      margin: 24px 0 40px;
+      box-shadow: 0 8px 40px rgba(240,98,146,0.13);
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .letter.visible { opacity: 1; transform: translateY(0); }
+
+    .letter-header {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--deep);
+      margin-bottom: 22px;
+    }
+
+    .letter p {
+      font-size: 1rem;
+      line-height: 1.95;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    .letter-sign {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--rose);
+      margin-top: 24px;
+    }
+
+    /* ── QR CODE ─────────────────────────────── */
+    .qr-section {
+      padding: 56px 0 44px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .qr-section.visible { opacity: 1; transform: translateY(0); }
+
+    .qr-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--deep);
+      margin-bottom: 8px;
+    }
+
+    .qr-section p {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 28px;
+    }
+
+    #qrcode {
+      margin: 0 auto;
+      width: 180px;
+      height: 180px;
+      padding: 14px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(240,98,146,0.2);
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 20px 56px;
+      font-size: 0.85rem;
+      color: #ccc;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer strong { color: var(--rose); }
+  </style>
 </head>
 <body>
-    <canvas class="confetti" id="confettiCanvas"></canvas>
-    <div class="container">
-        <header>
-            <h1>Feliz Dia das Mulheres, meu amor!</h1>
-        </header>
-        <section class="photos">
-            <!-- slideshow simples com algumas fotos fixas -->
-            <img src="photo1.jpg" alt="Nós juntos 1">
-            <img src="photo2.jpg" alt="Nós juntos 2">
-            <img src="photo3.jpg" alt="Nós juntos 3">
-        </section>
-        
-        <section class="gallery" id="gallery">
-            <!-- galeria dinâmica carregada via JavaScript -->
-        </section>
-        <section class="message">
-            <p>Hoje é um dia especial para celebrar você e tudo que você é. <br>
-            Cada momento ao seu lado é uma bênção, e eu quero que saiba o quanto você é amada e admirada.</p>
-            <p>Que este dia seja repleto de sorrisos, abraços e lembranças inesquecíveis. <br>
-            Te amo mais do que palavras podem dizer!</p>
-        </section>
-        <section id="qrcode"></section>
-        <footer>
-            Abra a câmera do celular no QR code e veja esta página novamente sempre que quiser.
-        </footer>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- ══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <span class="hero-emoji">💖</span>
+  <h1>Feliz Dia das Mulheres,<br>Mozinho!</h1>
+  <p class="hero-sub">
+    Hoje o mundo para para celebrar a mulher mais incrível da minha vida.
+    Cada momento contigo é um presente que eu nunca vou parar de agradecer.
+  </p>
+  <div class="scroll-hint">
+    <span>Role para baixo</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+<!-- ══ CONTEÚDO ══════════════════════════════════════════ -->
+<div class="wrap">
+
+  <!-- Momento 1 -->
+  <div class="moment" data-reveal>
+    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós juntos" />
+    <div class="moment-card">
+      <span class="moment-tag">✨ Você me inspira</span>
+      <p class="moment-text">
+        "Feliz Dia das Mulheres para a dona do meu coração e a protagonista da minha vida.
+        Todos os dias eu acordo com a certeza de que tirei a sorte grande."
+      </p>
     </div>
+  </div>
 
-    <!-- biblioteca de QR Code (https://davidshimjs.github.io/qrcodejs/) -->
-    <script>
-        // geração de QR com a url atual
-        window.addEventListener('DOMContentLoaded', () => {
-            const qrcodeContainer = document.getElementById('qrcode');
-            const url = window.location.href;
-            new QRCode(qrcodeContainer, {
-                text: url,
-                width: 180,
-                height: 180
-            });
-        });
+  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
 
-        // confetti simples usando canvas
-        function launchConfetti() {
-            const end = Date.now() + 5 * 1000;
-            const colors = ['#bb0000', '#ffffff'];
-            const canvas = document.getElementById('confettiCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            function randomRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const now = Date.now();
-                if (now > end) return;
-                for (let i = 0; i < 100; i++) {
-                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-                    ctx.fillRect(randomRange(0, canvas.width), randomRange(0, canvas.height), 5, 10);
-                }
-                requestAnimationFrame(draw);
-            }
-            draw();
-        }
+  <!-- Momento 2 -->
+  <div class="moment" data-reveal>
+    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Nós juntos" />
+    <div class="moment-card">
+      <span class="moment-tag">🌸 Minha luz</span>
+      <p class="moment-text">
+        "Você não é só a minha namorada — é a mulher que ilumina meus dias,
+        me inspira a ser alguém melhor e enche a minha vida de cor e de sentido."
+      </p>
+    </div>
+  </div>
 
-        launchConfetti();
+  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
 
-        // montagem da galeria dinâmica
-        (function() {
-            const photos = [
-                // lista de arquivos copiadas automaticamente
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (4).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (4).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (4).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (5).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (4).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (2).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (3).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (4).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (5).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg",
-                "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
-            ];
-            const gallery = document.getElementById('gallery');
-            photos.forEach(path => {
-                const img = document.createElement('img');
-                img.src = path;
-                img.alt = 'Foto de nós';
-                gallery.appendChild(img);
-            });
-        })();
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Banner 1 -->
+  <div class="highlight-banner" data-reveal>
+    <p>
+      "Sua doçura, sua inteligência e a forma como você cuida da gente
+      são as coisas mais preciosas que eu tenho.
+      Hoje o dia é seu — mas o presente de ter você é todo meu."
+    </p>
+    <span>— Para você, com todo o meu amor 💕</span>
+  </div>
+
+  <!-- Momento 3 -->
+  <div class="moment" data-reveal>
+    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós juntos" />
+    <div class="moment-card">
+      <span class="moment-tag">🤝 Minha parceira</span>
+      <p class="moment-text">
+        "Ter uma mulher incrível como você, que me apoia nos meus objetivos,
+        se preocupa com o meu crescimento e segura a minha mão nos momentos difíceis,
+        é o meu maior privilégio."
+      </p>
+    </div>
+  </div>
+
+  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
+
+  <!-- Momento 4 -->
+  <div class="moment" data-reveal>
+    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Nós juntos" />
+    <div class="moment-card">
+      <span class="moment-tag">💻 Nerd apaixonado</span>
+      <p class="moment-text">
+        "Se eu pudesse programar a mulher perfeita, ainda assim não chegaria nem perto
+        de você. Nenhuma linha de código seria capaz de replicar a sua essência.
+        Você é o meu projeto favorito para a vida inteira."
+      </p>
+    </div>
+  </div>
+
+  <div class="divider">♡ &nbsp; ♡ &nbsp; ♡</div>
+
+  <!-- Momento 5 -->
+  <div class="moment" data-reveal>
+    <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós juntos" />
+    <div class="moment-card">
+      <span class="moment-tag">🌟 Toda minha admiração</span>
+      <p class="moment-text">
+        "Hoje é dia de celebrar a força, a garra e a delicadeza que fazem de você
+        essa mulher espetacular. Que orgulho imenso eu tenho de poder chamar
+        uma guerreira tão incrível de 'meu amor'."
+      </p>
+    </div>
+  </div>
+
+  <!-- Banner 2 -->
+  <div class="highlight-banner" data-reveal>
+    <p>
+      "Obrigado por ser meu porto seguro, minha parceira e por não desistir da gente.
+      Ao seu lado, eu sei que posso conquistar qualquer coisa."
+    </p>
+    <span>— Seu mozão, para sempre 💜</span>
+  </div>
+
+  <!-- ══ GALERIA ════════════════════════════ -->
+  <div class="gallery-section" data-reveal>
+    <h2 class="section-title">Nossa História em Fotos</h2>
+    <p class="section-sub">Cada imagem é um capítulo que eu guardo no coração 📷</p>
+    <div class="mosaic" id="mosaic"></div>
+  </div>
+
+  <!-- ══ CARTA FINAL ════════════════════════ -->
+  <div class="letter" data-reveal>
+    <p class="letter-header">Para você, especialmente hoje,</p>
+    <p>
+      Às vezes faltam palavras para descrever tudo que sinto, mas hoje eu preciso tentar.
+      Você transforma o meu comum em extraordinário — mesmo nos dias mais simples,
+      do seu lado tudo tem um sabor diferente, mais leve e mais bonito.
+    </p>
+    <p>
+      Admiro a sua resiliência, a sua capacidade de se importar genuinamente com as pessoas
+      ao seu redor, e a luz enorme que você carrega consigo.
+      Hoje e sempre, quero que você se sinta tão amada, valorizada e respeitada quanto merece.
+    </p>
+    <p>
+      "Que hoje, amanhã e sempre você se sinta tão especial
+      quanto é — porque você merece tudo de melhor que esse mundo tem a oferecer.
+      Meu coração é 100 % seu."
+    </p>
+    <p class="letter-sign">Com todo o meu amor, seu mozão 💖</p>
+  </div>
+
+  <!-- ══ QR CODE ════════════════════════════ -->
+  <div class="qr-section" data-reveal>
+    <h2>Guarde esse momento</h2>
+    <p>Escaneie e salve essa página para ler sempre que quiser 💕</p>
+    <div id="qrcode"></div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<footer>
+  Feito com <strong>muito amor</strong> especialmente para você &nbsp;💖
+</footer>
+
+<!-- ─── SCRIPTS ──────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ── QR Code ─────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  new QRCode(document.getElementById('qrcode'), {
+    text: window.location.href,
+    width: 152,
+    height: 152,
+    colorDark: '#880e4f',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+});
+
+/* ── Galeria mosaico ─────────────────────── */
+const allPhotos = [
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (5).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (5).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
+];
+
+const mosaic = document.getElementById('mosaic');
+allPhotos.forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'Memória nossa';
+  img.loading = 'lazy';
+  img.addEventListener('click', () => openLightbox(src));
+  mosaic.appendChild(img);
+});
+
+/* ── Lightbox ────────────────────────────── */
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+document.getElementById('lightbox-close').addEventListener('click', () => {
+  document.getElementById('lightbox').classList.remove('open');
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+
+/* ── Scroll reveal ───────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+/* ── Corações flutuantes ─────────────────── */
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const hearts = Array.from({ length: 24 }, () => ({
+    x:     Math.random() * window.innerWidth,
+    y:     Math.random() * window.innerHeight,
+    size:  Math.random() * 13 + 7,
+    speed: Math.random() * 0.55 + 0.18,
+    alpha: Math.random() * 0.35 + 0.08,
+    drift: (Math.random() - 0.5) * 0.4
+  }));
+
+  function drawHeart(x, y, s, a) {
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = '#f06292';
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x, y - s/2, x - s, y - s/2, x - s, y);
+    ctx.bezierCurveTo(x - s, y + s * 0.6, x, y + s * 1.1, x, y + s * 1.3);
+    ctx.bezierCurveTo(x, y + s * 1.1, x + s, y + s * 0.6, x + s, y);
+    ctx.bezierCurveTo(x + s, y - s/2, x, y - s/2, x, y);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hearts.forEach(h => {
+      drawHeart(h.x, h.y, h.size, h.alpha);
+      h.y -= h.speed; h.x += h.drift; h.alpha -= 0.0004;
+      if (h.y < -30 || h.alpha <= 0) {
+        h.y = canvas.height + 20;
+        h.x = Math.random() * canvas.width;
+        h.alpha = Math.random() * 0.35 + 0.08;
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
