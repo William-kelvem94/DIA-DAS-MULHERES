@@ -281,7 +281,9 @@
 
 <div id="progress"></div>
 <canvas id="bg-canvas"></canvas>
-<button id="music-btn">▶️</button>
+<!-- iframe escondido tocando o refrão automaticamente -->
+<iframe id="bg-video" src="https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=1&loop=1&controls=0&mute=0&playlist=YQ-qToZUybM" style="display:none;"></iframe>
+<button id="music-btn">🎵</button>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
@@ -478,14 +480,19 @@
 <script>
 /* ── QR Code ─────────────────────── */
 
-// abrir vídeo do YouTube em nova aba com o refrão
+// controlar reprodução via iframe e texto do botão
 const btn = document.getElementById('music-btn');
-const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
+const iframe = document.getElementById('bg-video');
+let muted = false;
 btn.addEventListener('click', () => {
-  window.open(videoUrl, '_blank');
-  // toggle icon when clicked
-  if (btn.textContent === '▶️') btn.textContent = '⏱️';
-  else btn.textContent = '▶️';
+  muted = !muted;
+  // YouTube embed requires postMessage to mute/unmute
+  iframe.contentWindow.postMessage('{"event":"command","func":"' + (muted? 'mute' : 'unMute') + '","args":""}', '*');
+  btn.textContent = muted ? '🔇' : '🎵';
+});
+// try to unmute after user interaction if autoplay blocked
+document.addEventListener('click', () => {
+  iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
 });
 
 
