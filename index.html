@@ -8,12 +8,12 @@
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --rose:#f06292;--peach:#fce4ec;--deep:#880e4f;
-      --cream:#fff0f5;--purple:#ce93d8;--white:#fff;
-      --gold:#f9d423;
+      --rose:#c2185b;--peach:#4a148c;--deep:#311b92;
+      --cream:#121212;--purple:#4a148c;--white:#e0e0e0;
+      --gold:#ffb300;
     }
     html{scroll-behavior:smooth}
-    body{font-family:'Lato',sans-serif;background:var(--cream);color:#444;overflow-x:hidden}
+    body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--white);overflow-x:hidden}
 
     /* CANVAS FUNDO */
     #bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
@@ -21,7 +21,7 @@
     /* HERO */
     .hero{
       min-height:100vh;
-      background:linear-gradient(150deg,#f8a5c2 0%,#c89fdb 45%,#f48fb1 100%);
+      background:linear-gradient(150deg,#4a148c 0%,#311b92 45%,#c2185b 100%);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
       text-align:center;padding:48px 24px;position:relative;z-index:1;overflow:hidden
     }
@@ -68,7 +68,7 @@
       animation:fadeUp 0.8s ease 1s both
     }
     .scroll-hint{
-      margin-top:50px;color:rgba(255,255,255,0.65);
+      margin-top:50px;color:rgba(255,255,255,0.85);
       font-size:0.82rem;display:flex;flex-direction:column;align-items:center;gap:6px;
       animation:fadeUp 1s ease 1.4s both
     }
@@ -132,7 +132,7 @@
 
     /* CARD FRASE */
     .moment-card{
-      background:var(--white);border-radius:22px;
+      background:#1e1e1e;color:var(--white);border-radius:22px;
       padding:34px 30px 28px;
       box-shadow:0 8px 36px rgba(240,98,146,0.11);
       border-left:5px solid var(--rose);
@@ -141,7 +141,7 @@
     }
     .moment-card::before{
       content:'\201C';font-family:'Playfair Display',serif;
-      font-size:6rem;color:var(--peach);
+      font-size:6rem;color:var(--gold);
       position:absolute;top:-20px;left:14px;line-height:1
     }
     .moment-text{
@@ -164,12 +164,12 @@
     .banner.visible{opacity:1;transform:translateY(0)}
     .banner-bg{
       position:absolute;inset:0;
-      background:linear-gradient(140deg,#f06292 0%,#ce93d8 55%,#f48fb1 100%);
+      background:linear-gradient(140deg,#c2185b 0%,#4a148c 55%,#311b92 100%);
       z-index:0
     }
     .banner-bg::after{
       content:'';position:absolute;inset:0;
-      background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='3' fill='white' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E")
+      background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='3' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/g%3E%3C/svg%3E")
     }
     .banner-content{
       position:relative;z-index:1;
@@ -207,7 +207,7 @@
     .mosaic img:hover{transform:scale(1.04);box-shadow:0 14px 38px rgba(240,98,146,0.38)}
 
     /* LIGHTBOX */
-    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center;padding:20px}
     .lightbox.open{display:flex}
     .lightbox img{max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 0 80px rgba(240,98,146,0.55)}
     .lb-close{position:absolute;top:20px;right:24px;background:none;border:none;color:white;font-size:2.8rem;cursor:pointer;line-height:1}
@@ -250,7 +250,7 @@
     #qrcode{margin:0 auto;width:180px;height:180px;padding:14px;background:white;border-radius:18px;box-shadow:0 8px 34px rgba(240,98,146,0.22)}
 
     /* FOOTER */
-    footer{text-align:center;padding:44px 20px 60px;font-size:0.85rem;color:#ccc;position:relative;z-index:1}
+    footer{text-align:center;padding:44px 20px 60px;font-size:0.85rem;color:rgba(255,255,255,0.6);position:relative;z-index:1}
     footer strong{color:var(--rose)}
     .footer-hearts{font-size:1.3rem;display:block;margin-bottom:8px;animation:heartbeat 2s ease-in-out infinite}
 
