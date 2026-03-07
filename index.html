@@ -4,6 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>💖 Para o meu Mozinho — Feliz Dia das Mulheres!</title>
+  <!-- música de fundo (substitua URL pelo mp3 disponível) -->
+  <audio id="bg-music" src="https://example.com/die-for-you.mp3" preload="auto" loop></audio>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -12,7 +14,8 @@
       --cream:#121212;--purple:#4a148c;--white:#e0e0e0;
       --gold:#ffb300;
     }
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;font-size:18px}
+    body{line-height:1.65}
     body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--white);overflow-x:hidden}
 
     /* CANVAS FUNDO */
@@ -55,20 +58,21 @@
       animation:fadeUp 1s ease 0.3s both
     }
     .hero-sub{
-      margin-top:20px;font-size:1.05rem;
+      margin-top:20px;font-size:1.1rem;
       color:rgba(255,255,255,0.92);
       max-width:430px;line-height:1.8;font-weight:300;
       animation:fadeUp 1s ease 0.6s both
     }
     .typewriter{
       font-family:'Dancing Script',cursive;
+      letter-spacing:0.4px;
       font-size:clamp(1.2rem,4vw,1.7rem);
       color:var(--white);margin-top:28px;
       min-height:2.2rem;
       animation:fadeUp 0.8s ease 1s both
     }
     .scroll-hint{
-      margin-top:50px;color:rgba(255,255,255,0.85);
+      margin-top:50px;color:rgba(255,255,255,0.9);
       font-size:0.82rem;display:flex;flex-direction:column;align-items:center;gap:6px;
       animation:fadeUp 1s ease 1.4s both
     }
@@ -266,7 +270,10 @@
     }
 
     /* PROGRESS BAR TOPO */
-    #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--rose),var(--purple),var(--gold));width:0%;z-index:999;transition:width 0.1s linear}
+    #progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--rose),var(--purple),var(--gold));width:0%;z-index:999;transition:width 0.1s linear}    
+    /* botão de música */
+    #music-btn{position:fixed;bottom:20px;right:20px;background:var(--rose);color:var(--white);border:none;padding:12px 18px;border-radius:50px;box-shadow:0 4px 14px rgba(0,0,0,0.3);cursor:pointer;font-size:1rem;z-index:1001;}
+    #music-btn.playing{background:var(--gold);color:#111;}
   </style>
 </head>
 <body>
