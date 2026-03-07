@@ -280,6 +280,7 @@
 
 <div id="progress"></div>
 <canvas id="bg-canvas"></canvas>
+<button id="music-btn">▶️</button>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
@@ -475,6 +476,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 /* ── QR Code ─────────────────────── */
+
+/* música play/pause */
+const music = document.getElementById('bg-music');
+const btn = document.getElementById('music-btn');
+btn.addEventListener('click', () => {
+  if (music.paused) {
+    music.play();
+    btn.textContent = '⏸️';
+    btn.classList.add('playing');
+  } else {
+    music.pause();
+    btn.textContent = '▶️';
+    btn.classList.remove('playing');
+  }
+});
+
+// tentar autoplay (alguns browsers bloqueiam)
+music.volume = 0.6; // suave
+music.play().catch(()=>{});
+
+
 window.addEventListener('DOMContentLoaded', () => {
   new QRCode(document.getElementById('qrcode'), {
     text: window.location.href,
@@ -559,8 +581,8 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
 /* ── Typewriter ──────────────────── */
 const phrases = [
-  "Feliz Dia das Mulheres, meu amor ❤️",
   "Minha parceira de vida e de código 💻",
+  "Feliz Dia das Mulheres, meu amor ❤️",
   "Obrigado por cuidar tanto de mim 🌸",
   "Com você, todo bug tem solução 💫",
 ];
@@ -584,7 +606,7 @@ document.addEventListener('click', e => {
   for (let i = 0; i < 7; i++) {
     const sp = document.createElement('span');
     sp.className = 'sparkle';
-    sp.textContent = ['✨','💖','🌸','⭐','💫'][Math.floor(Math.random() * 5)];
+    sp.textContent = ['💫','⭐','✨','💖','🌸'][Math.floor(Math.random() * 5)];
     const size = Math.random() * 18 + 14;
     sp.style.cssText = `left:${e.clientX + (Math.random()-0.5)*60}px;top:${e.clientY + window.scrollY + (Math.random()-0.5)*60}px;font-size:${size}px`;
     document.body.appendChild(sp);
