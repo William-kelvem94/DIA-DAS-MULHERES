@@ -314,7 +314,8 @@
 
 <div id="progress"></div>
 <canvas id="bg-canvas"></canvas>
-<button id="music-btn" aria-label="Abrir refrão no YouTube">▶️</button>
+<button id="music-btn" aria-label="Tocar refrão">🔊</button>
+<audio id="bg-audio" src="https://example.com/die-for-you-refrain.mp3" preload="auto"></audio>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero" role="banner">
@@ -387,7 +388,7 @@
   <!-- Momento 3 -->
   <div class="moment" data-reveal>
     <div class="photo-frame">
-      <span class="photo-badge">🧑‍💻 Meu melhor projeto</span>
+      <span class="photo-badge">💻 Meu melhor projeto</span>
       <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós de mãos dadas"/>
     </div>
     <div class="moment-card">
@@ -397,7 +398,7 @@
         entrar em uns 'loops' de desentendimento de vez em quando, mas sempre damos um
         jeito de compilar uma versão melhor de nós dois."
       </p>
-      <p class="moment-author">— seu dev favorito 👨‍💻</p>
+      <p class="moment-author">— seu dev favorito </p>
     </div>
   </div>
 
@@ -500,7 +501,7 @@
 </div>
 
 <footer>
-  <span class="footer-hearts">🥰 💗 🥰</span>
+  <span class="footer-hearts">❤️ 💗 ❤️</span>
   Feito com <strong>muito amor</strong>, especialmente pra você.
 </footer>
 
@@ -510,11 +511,17 @@
 <script>
 /* ── QR Code ─────────────────────── */
 
-// abrir YouTube em nova aba direto no refrão ao clicar
+// controlar reprodução de áudio local
 const btn = document.getElementById('music-btn');
-const videoUrl = 'https://www.youtube.com/watch?v=YQ-qToZUybM&t=44s';
+const audio = document.getElementById('bg-audio');
 btn.addEventListener('click', () => {
-  window.open(videoUrl, '_blank');
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '🔇';
+  } else {
+    audio.pause();
+    btn.textContent = '🔊';
+  }
 });
 
 // toast utility
