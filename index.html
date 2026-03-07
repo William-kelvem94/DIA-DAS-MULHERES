@@ -337,6 +337,7 @@
 <div id="music-fab">
   <div id="music-menu">
     <button class="music-opt" id="yt-open-btn">🎬 Ver clipe no YouTube</button>
+    <button class="music-opt" id="yt-chorus-btn">🎧 Ouvir refrão (YouTube)</button>
     <button class="music-opt" id="play-local-btn">🎵 Tocar música</button>
   </div>
   <button id="music-btn" aria-label="Abrir player de música">🎵</button>
@@ -526,6 +527,17 @@
   </div>
 </div>
 
+<!-- optional persistent embed: start at chorus straight away -->
+<div class="yt-chorus-embed">
+  <iframe width="300" height="170"
+    src="https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=0"
+    title="Die For You – refrão"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" id="lb-close">&times;</button>
@@ -546,11 +558,16 @@
 /* ── QR Code ─────────────────────── */
 
 /* ── Music FAB + YouTube Modal ───── */
-const ytEmbedUrl   = 'https://www.youtube.com/embed/YQ-qToZUybM?start=52&autoplay=1';
+// when GitHub Pages serves the site the MP3 must be committed along with the
+// HTML; otherwise the <audio> element will 404. as an alternative the YouTube
+// embed is configured to jump to the chorus (≈44 s) so visitors can play that
+// directly without relying on a local file.
+const ytEmbedUrl   = 'https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=1';
 const musicBtn     = document.getElementById('music-btn');
 const musicMenu    = document.getElementById('music-menu');
 const playLocalBtn = document.getElementById('play-local-btn');
 const ytOpenBtn    = document.getElementById('yt-open-btn');
+const ytChorusBtn  = document.getElementById('yt-chorus-btn'); // new
 const audio        = document.getElementById('bg-audio');
 const ytModal      = document.getElementById('yt-modal');
 const ytIframe     = document.getElementById('yt-iframe');
@@ -565,9 +582,14 @@ document.addEventListener('click', e => {
 });
 
 // Play / pause local file
+// if you want the track to start at the chorus instead of the beginning,
+// set the `currentTime` property before calling play().
+// the chorus is around 44 seconds into this MP3.
 playLocalBtn.addEventListener('click', () => {
   musicMenu.classList.remove('open');
   if (audio.paused) {
+    // jump to the lyrics' refrão
+    audio.currentTime = 44; // change this value if the chorus timing is different
     audio.play().then(() => {
       playLocalBtn.textContent = '⏸ Pausar música';
       musicBtn.classList.add('playing');
@@ -591,6 +613,13 @@ audio.addEventListener('ended', () => {
 // Open YouTube modal
 ytOpenBtn.addEventListener('click', () => {
   ytIframe.src = ytEmbedUrl;
+  ytModal.classList.add('open');
+  musicMenu.classList.remove('open');
+});
+
+// play chorus directly in modal (same URL but start param is already set)
+ytChorusBtn.addEventListener('click', () => {
+  ytIframe.src = ytEmbedUrl; // already starts at 44s
   ytModal.classList.add('open');
   musicMenu.classList.remove('open');
 });
