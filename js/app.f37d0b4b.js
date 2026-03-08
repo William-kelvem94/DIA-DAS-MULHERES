@@ -151,6 +151,15 @@ window.addEventListener("DOMContentLoaded", () => {
 const progressEl = document.getElementById("progress");
 let tick = false;
 
+// prevent browser from restoring previous scroll position on reload
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.addEventListener('pageshow', () => {
+  // pageshow fires even when coming back from back/forward cache
+  window.scrollTo({ top: 0 });
+});
+
 // paint-based phases
 if ("PerformanceObserver" in window) {
   const phaseColors = {
@@ -175,6 +184,8 @@ if ("PerformanceObserver" in window) {
 }
 
 window.addEventListener("load", () => {
+  // ensure we start at the top before painting progress
+  window.scrollTo(0, 0);
   progressEl.style.transition = "width 1.2s ease,inset 0.3s";
   progressEl.style.background = "var(--gold)";
   progressEl.style.width = "100%";
