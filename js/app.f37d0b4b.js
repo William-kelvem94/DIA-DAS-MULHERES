@@ -246,10 +246,12 @@ window.addEventListener('scroll', () => {
 
 /* ── Galeria mosaico ─────────────── */
 const allPhotos = [
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (3).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (3).jpeg",
@@ -258,11 +260,13 @@ const allPhotos = [
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (3).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (3).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (4).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (5).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (3).jpeg",
@@ -273,23 +277,71 @@ const allPhotos = [
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (3).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (4).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (5).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.46.01.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.46.02 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.46.02 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.46.02 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.46.02.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.02 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.02.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (3).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (4).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (5).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03 (6).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.03.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.04 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.04 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-08 at 06.47.04.jpeg"
 ];
+
+const galleryPhotos = [...new Set(allPhotos)];
+
+function toWebpPath(src) {
+  return src.replace(/\.jpe?g$/i, '.webp');
+}
+
+function hasWebpVariant(src) {
+  // The 2026-03-07 batch has generated WEBP files; the newer batch is JPEG-only for now.
+  return src.includes('2026-03-07');
+}
+
+function setBestSource(imgEl, src) {
+  if (!hasWebpVariant(src)) {
+    imgEl.src = encodeURI(src);
+    return;
+  }
+  const webpSrc = encodeURI(toWebpPath(src));
+  const jpegSrc = encodeURI(src);
+  imgEl.onerror = () => {
+    // Fallback to JPEG when the corresponding WEBP is missing.
+    if (imgEl.src !== jpegSrc) imgEl.src = jpegSrc;
+  };
+  imgEl.src = webpSrc;
+}
 
 let lbIndex = 0;
 const mosaic = document.getElementById('mosaic');
-allPhotos.forEach((src, i) => {
+galleryPhotos.forEach((src, i) => {
   const picture = document.createElement('picture');
-  const webp = document.createElement('source');
-  let webpPath = src.replace(/\.jpe?g$/i, '') + '.webp';
-  webp.srcset = encodeURI(webpPath);
-  webp.type = 'image/webp';
   const img = document.createElement('img');
-  img.src = src; img.alt = 'Memória nossa'; img.loading = 'lazy';
+  img.src = encodeURI(src);
+  img.alt = 'Memória nossa';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  if (i < 6) img.fetchPriority = 'high';
   img.style.setProperty('--rand', Math.random());
   img.addEventListener('click', () => openLb(i));
-  picture.appendChild(webp);
+  if (hasWebpVariant(src)) {
+    const webp = document.createElement('source');
+    webp.srcset = encodeURI(toWebpPath(src));
+    webp.type = 'image/webp';
+    picture.appendChild(webp);
+  }
   picture.appendChild(img);
   mosaic.appendChild(picture);
 });
@@ -307,28 +359,33 @@ function cycleMoments() {
 setInterval(cycleMoments, 10000);
 
 /* ── Lightbox com navegação ──────── */
+let lbMainImage;
+
+function ensureLightboxImage() {
+  if (lbMainImage) return lbMainImage;
+  const carousel = document.getElementById('carousel');
+  carousel.innerHTML = '';
+  const slide = document.createElement('div');
+  slide.className = 'slide active';
+  const img = document.createElement('img');
+  img.alt = 'Memória';
+  img.loading = 'eager';
+  img.decoding = 'sync';
+  slide.appendChild(img);
+  carousel.appendChild(slide);
+  lbMainImage = img;
+  return img;
+}
+
+function renderLightboxPhoto() {
+  const img = ensureLightboxImage();
+  setBestSource(img, galleryPhotos[lbIndex]);
+}
+
 function openLb(i) {
   lbIndex = i;
   const lightboxEl = document.getElementById('lightbox');
-  const carousel = document.getElementById('carousel');
-  // build slides if empty
-  if (carousel.children.length === 0) {
-    const count = allPhotos.length;
-    const angle = 360 / count;
-    allPhotos.forEach((src,j)=>{
-      const slide = document.createElement('div');
-      slide.className='slide';
-      slide.style.transform = `rotateY(${j*angle}deg) translateZ(600px)`;
-      const img = document.createElement('img');
-      img.src = encodeURI(src.replace(/\.jpe?g$/i,'.webp'));
-      img.alt = 'Memória';
-      slide.appendChild(img);
-      carousel.appendChild(slide);
-    });
-  }
-  // rotate to index
-  const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-i*angle}deg)`;
+  renderLightboxPhoto();
   lightboxEl.setAttribute('aria-hidden','false');
   lightboxEl.classList.add('open');
   lightboxEl.focus();
@@ -340,16 +397,12 @@ document.getElementById('lb-close').addEventListener('click', () => {
 });
 document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
 document.getElementById('lb-prev').addEventListener('click', () => {
-  lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length;
-  const carousel = document.getElementById('carousel');
-  const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
+  lbIndex = (lbIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+  renderLightboxPhoto();
 });
 document.getElementById('lb-next').addEventListener('click', () => {
-  lbIndex = (lbIndex + 1) % allPhotos.length;
-  const carousel = document.getElementById('carousel');
-  const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
+  lbIndex = (lbIndex + 1) % galleryPhotos.length;
+  renderLightboxPhoto();
 });
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
