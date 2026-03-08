@@ -465,18 +465,6 @@ footer strong{color:var(--rose)}
   display:flex;flex-direction:column;
   align-items:flex-end;gap:10px;z-index:1001;
 }
-/* theme toggle button */
-#theme-toggle{
-  position:fixed;bottom:92px;right:24px;
-  width:44px;height:44px;border-radius:50%;
-  background:var(--violet);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 16px var(--glow-vio);
-  cursor:pointer;font-size:1.3rem;
-  transition:transform 0.2s,background 0.2s;
-  z-index:1001;
-}
-#theme-toggle:hover{transform:scale(1.1);background:var(--rose);}
 #music-btn{
   background:linear-gradient(135deg,var(--violet),var(--rose));
   color:#fff;border:none;width:54px;height:54px;

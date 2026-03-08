@@ -1,21 +1,5 @@
 ﻿/* ── QR Code ─────────────────────── */
 
-/* Theme toggle setup */
-const themeBtn = document.getElementById('theme-toggle');
-function applyTheme(t) {
-  if (t === 'light') document.documentElement.setAttribute('data-theme','light');
-  else document.documentElement.removeAttribute('data-theme');
-  if (themeBtn) themeBtn.textContent = t === 'light' ? '🌞' : '🌙';
-}
-if (themeBtn) {
-  const saved = localStorage.theme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-  applyTheme(saved);
-  themeBtn.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    applyTheme(next);
-    localStorage.theme = next;
-  });
-}
 
 /* ── Music FAB + YouTube Modal ───── */
 // when GitHub Pages serves the site the MP3 must be committed along with the
