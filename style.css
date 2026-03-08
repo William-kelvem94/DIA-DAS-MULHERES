@@ -338,3 +338,10 @@
   /* accessibility */
   button:focus, a:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
   img:focus { outline: 2px solid var(--rose); }
+
+  /* light‑mode variant */
+  @media (prefers-color-scheme: light) {
+    body { background: #fff; color: #111; }
+    .moment-card, .banner, .letter { background: #fafafa; color: #111; }
+    .hero { background: linear-gradient(150deg,#4a148c 0%,#311b92 45%,#c2185b 100%); }
+  }
