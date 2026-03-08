@@ -13,14 +13,18 @@ def hash_file(path):
 
 files = ['style.css','app.js']
 newnames = {}
+hashes = []
 for f in files:
     if os.path.exists(f):
         h = hash_file(f)
+        hashes.append(h)
         base,ext=os.path.splitext(f)
         new = f"{base}.{h}{ext}"
         shutil.copy2(f,new)
         newnames[f]=new
         print(f"hashed {f} -> {new}")
+
+version = '-'.join(hashes)
 
 # update index.html
 html = open('index.html','r',encoding='utf-8').read()
@@ -29,9 +33,10 @@ for orig,new in newnames.items():
 open('index.html','w',encoding='utf-8').write(html)
 print('index.html updated')
 
-# update sw.js caching list
+# update sw.js caching list and version placeholder
 if os.path.exists('sw.js'):
     sw = open('sw.js','r',encoding='utf-8').read()
+    sw = sw.replace('__CACHE_VERSION__', version)
     for orig,new in newnames.items():
         sw = sw.replace(orig, new)
     open('sw.js','w',encoding='utf-8').write(sw)
