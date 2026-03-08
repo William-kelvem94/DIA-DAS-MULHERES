@@ -351,15 +351,44 @@ function hasWebpVariant(src) {
 }
 
 function setBestSource(imgEl, src) {
+  const encodedJpegSrc = encodeURI(src);
+  const rawJpegSrc = src;
+
+  function handleFatalError() {
+    const picture = imgEl.closest("picture");
+    if (picture) {
+      picture.remove();
+      return;
+    }
+    imgEl.style.opacity = "0.25";
+  }
+
   if (!hasWebpVariant(src)) {
-    imgEl.src = encodeURI(src);
+    imgEl.onerror = () => {
+      if (imgEl.src !== rawJpegSrc) {
+        imgEl.src = rawJpegSrc;
+        return;
+      }
+      handleFatalError();
+    };
+    imgEl.src = encodedJpegSrc;
     return;
   }
+
   const webpSrc = encodeURI(toWebpPath(src));
-  const jpegSrc = encodeURI(src);
+  const jpegSrc = encodedJpegSrc;
   imgEl.onerror = () => {
-    // Fallback to JPEG when the corresponding WEBP is missing.
-    if (imgEl.src !== jpegSrc) imgEl.src = jpegSrc;
+    if (imgEl.src !== jpegSrc) {
+      // Fallback to JPEG when WEBP is unavailable.
+      imgEl.src = jpegSrc;
+      return;
+    }
+    if (imgEl.src !== rawJpegSrc) {
+      // Final fallback for edge cases with encoded paths.
+      imgEl.src = rawJpegSrc;
+      return;
+    }
+    handleFatalError();
   };
   imgEl.src = webpSrc;
 }
@@ -369,7 +398,6 @@ const mosaic = document.getElementById("mosaic");
 galleryPhotos.forEach((src, i) => {
   const picture = document.createElement("picture");
   const img = document.createElement("img");
-  img.src = encodeURI(src);
   img.alt = "Memória nossa";
   img.loading = "lazy";
   img.decoding = "async";
@@ -382,6 +410,7 @@ galleryPhotos.forEach((src, i) => {
     webp.type = "image/webp";
     picture.appendChild(webp);
   }
+  setBestSource(img, src);
   picture.appendChild(img);
   mosaic.appendChild(picture);
 });
