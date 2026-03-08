@@ -97,6 +97,29 @@ function showToast(msg) {
   }, 1800);
 }
 
+// particle toggle helper (preference persisted)
+const particleToggle = document.getElementById("toggle-particles");
+function applyParticlesPref(disabled) {
+  if (disabled) document.body.classList.add("no-particles");
+  else document.body.classList.remove("no-particles");
+  if (particleToggle)
+    particleToggle.textContent = disabled
+      ? "✨ Ligar partículas"
+      : "✨ Desligar partículas";
+  localStorage.particlesDisabled = disabled ? "1" : "";
+}
+if (particleToggle) {
+  particleToggle.addEventListener("click", () => {
+    const now = document.body.classList.contains("no-particles");
+    applyParticlesPref(!now);
+  });
+}
+// initialize from storage
+(function () {
+  const pref = localStorage.particlesDisabled === "1";
+  applyParticlesPref(pref);
+})();
+
 // easter egg keyboard sequence
 (() => {
   const seq = ["a", "m", "o", "r"];
@@ -823,6 +846,11 @@ document.addEventListener("click", (e) => {
   }
 
   function tick() {
+    // if user disabled particles completely, do nothing
+    if (document.body.classList.contains("no-particles")) {
+      requestAnimationFrame(tick);
+      return;
+    }
     // skip drawing when scroll events are firing fast; keeps scrolling
     // smooth on slower devices.
     if (!isScrolling) {

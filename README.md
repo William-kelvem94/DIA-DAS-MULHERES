@@ -76,6 +76,20 @@ Edite as seções `.moment-card` dentro do `index.html` — cada bloco tem uma t
 ### Regenerar assets
 Sempre que alterar `css/style.css` ou `js/app.js`, execute `python scripts/build.py` para criar os arquivos com hash e atualizar o `index.html` e o service worker.
 
+### Imagens e otimização
+O diretório **FOTOS MOZINHO/** contém os JPEG originais; para gerar versões WebP (mais leves) basta rodar:
+```bash
+python scripts/convert_images.py
+```
+Isso criará pares `.webp` ao lado de cada JPEG. O script ignora automaticamente arquivos já convertidos.
+
+### Desativar partículas
+Se o dispositivo estiver lento há um botão no menu de música (✨ Desligar partículas) que oculta o fundo animado e reduz o uso de CPU.
+
+### Observações adicionais
+- O arquivo `app.js` foi removido da raiz, ele era apenas a fonte não minificada usada durante o desenvolvimento.
+- O service worker adiciona automaticamente os arquivos CSS/JS gerados ao cache toda vez que você roda o `build.py`, garantindo funcionamento offline.
+
 ---
 
 ## 🛠️ Tecnologias usadas
