@@ -86,6 +86,15 @@ Isso criará pares `.webp` ao lado de cada JPEG. O script ignora automaticamente
 ### Desativar partículas
 Se o dispositivo estiver lento há um botão no menu de música (✨ Desligar partículas) que oculta o fundo animado e reduz o uso de CPU.
 
+### Empacotar para uso offline
+Caso você queira guardar uma cópia independente do site (por exemplo se o GitHub Pages for desativado), há um utilitário Python que cria um ZIP com todos os arquivos necessários. Basta correr:
+
+```bash
+python scripts/package_offline.py
+```
+
+O arquivo `offline.zip` resultante contém `index.html`, as pastas `css/`, `js/`, `assets/`, `FOTOS MOZINHO/` e outros recursos; ao descompactá‑lo e abrir `index.html` no navegador, a página funciona exatamente como on‑line.
+
 ### Observações adicionais
 - O arquivo `app.js` foi removido da raiz, ele era apenas a fonte não minificada usada durante o desenvolvimento.
 - O service worker adiciona automaticamente os arquivos CSS/JS gerados ao cache toda vez que você roda o `build.py`, garantindo funcionamento offline.
