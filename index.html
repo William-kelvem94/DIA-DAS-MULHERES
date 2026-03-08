@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#c2185b"/>
   <title>💖 Para o meu Mozinho — Feliz Dia das Mulheres!</title>
   <!-- botão abrir vídeo do refrão (YouTube) -->
   <!-- o refrão começa aproximadamente em 0:44s -->
 
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="preload" href="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" as="image" />
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
@@ -222,10 +224,15 @@
       font-size:2.4rem;color:var(--deep);margin-bottom:4px
     }
     .section-sub{text-align:center;font-size:0.88rem;color:#ccc;margin-bottom:30px}
-    .mosaic{columns:2;column-gap:10px}
+    .mosaic{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+      gap:10px;
+      margin-bottom:20px;
+    }
 
     @media (max-width:600px){
-      .mosaic{columns:1;}
+      .mosaic{grid-template-columns:1fr;}
       .hero h1{font-size:2.2rem;}
       .hero-sub{font-size:1rem;}
       .section-title{font-size:2rem;}
@@ -234,11 +241,10 @@
       #music-btn{padding:16px 20px;font-size:1.2rem;}
     }
     .mosaic img{
-      width:100%;margin-bottom:10px;border-radius:16px;
-      display:block;object-fit:cover;
+      width:100%;border-radius:16px;
+      display:block;object-fit:cover;aspect-ratio:4/5;
       transition:transform 0.35s ease,box-shadow 0.35s ease;cursor:pointer
     }
-    .mosaic img:hover{transform:scale(1.04);box-shadow:0 14px 38px rgba(240,98,146,0.38)}
 
     /* banners pulse on hover */
     .banner:hover{transform:scale(1.035);box-shadow:0 32px 78px rgba(240,98,146,0.48);animation:pulse 1.6s ease-in-out infinite}
@@ -340,6 +346,10 @@
   }
   /* hint to browser which elements will animate */
   .moment, .banner, .gallery-section, .letter, .qr-section { will-change: opacity, transform; }
+
+  /* accessibility */
+  button:focus, a:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+  img:focus { outline: 2px solid var(--rose); }
 
   </style>
 </head>
@@ -730,6 +740,19 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
   if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
   if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
+
+// Swipe support for mobile
+let startX = 0;
+const lbImg = document.getElementById('lb-img');
+lbImg.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+lbImg.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+  if (Math.abs(diff) > 50) { // threshold
+    if (diff > 0) document.getElementById('lb-next').click(); // swipe left
+    else document.getElementById('lb-prev').click(); // swipe right
+  }
 });
 
 /* ── Scroll reveal ───────────────── */
