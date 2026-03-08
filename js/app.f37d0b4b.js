@@ -330,15 +330,16 @@ window.addEventListener(
   });
   // keyboard navigation
   tl.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") tl.scrollBy({ left: 240, behavior: "smooth" });
-    if (e.key === "ArrowLeft") tl.scrollBy({ left: -240, behavior: "smooth" });
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      // navigate autoplay timeline and stop the arrow from scrolling page
+      e.preventDefault();
+      tl.scrollBy({ left: e.key === "ArrowRight" ? 240 : -240, behavior: "smooth" });
+    }
   });
-  tl.addEventListener("focus", () => {
-    document.body.style.overflow = "hidden";
-  });
-  tl.addEventListener("blur", () => {
-    document.body.style.overflow = "";
-  });
+  // we no longer forcibly hide body overflow when the timeline is focused
+  // because that could block vertical scrolling on both desktop and mobile.
+  // arrow-key navigation above already prevents page movement.
+
 })();
 
 /* ── Galeria mosaico ─────────────── */
