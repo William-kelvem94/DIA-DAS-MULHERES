@@ -2,8 +2,8 @@ const CACHE_NAME = 'dia-mulheres-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/style.css',
-  '/app.js',
+  '/style.359f9eba.css',
+  '/app.0a16a846.js',
   '/The Weeknd_ Ariana Grande - Die For You (Remix _ Lyric Video)(MP3_320K)_1.mp3'
 ];
 
