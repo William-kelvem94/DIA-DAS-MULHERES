@@ -355,9 +355,9 @@ function setBestSource(imgEl, src) {
   const rawJpegSrc = src;
 
   function handleFatalError() {
-    const picture = imgEl.closest("picture");
-    if (picture) {
-      picture.remove();
+    const container = imgEl.closest(".mosaic-item") || imgEl.closest("picture");
+    if (container) {
+      container.remove();
       return;
     }
     imgEl.style.opacity = "0.25";
@@ -395,7 +395,20 @@ function setBestSource(imgEl, src) {
 
 let lbIndex = 0;
 const mosaic = document.getElementById("mosaic");
+const mosaicCaptions = [
+  "Minha conselheira, minha amiga e minha namorada.",
+  "A parceira perfeita pra qualquer role da vida.",
+  "A mulher que domina 100% da minha atenção.",
+  "O motivo de eu querer ser um homem melhor todos os dias.",
+  "Meu fechamento. Ontem, hoje e sempre.",
+  "O sorriso que eu mais amo no mundo inteiro.",
+  "Com voce, ate as segundas-feiras sao boas.",
+];
+
 galleryPhotos.forEach((src, i) => {
+  const item = document.createElement("figure");
+  item.className = "mosaic-item";
+
   const picture = document.createElement("picture");
   const img = document.createElement("img");
   img.alt = "Memória nossa";
@@ -412,7 +425,14 @@ galleryPhotos.forEach((src, i) => {
   }
   setBestSource(img, src);
   picture.appendChild(img);
-  mosaic.appendChild(picture);
+
+  const caption = document.createElement("figcaption");
+  caption.className = "mosaic-caption";
+  caption.textContent = mosaicCaptions[i % mosaicCaptions.length];
+
+  item.appendChild(picture);
+  item.appendChild(caption);
+  mosaic.appendChild(item);
 });
 
 // Curated rotation per section so each text block keeps a coherent visual mood.
@@ -442,7 +462,10 @@ function applyMomentPhoto(imgEl, src) {
 
 function initMomentRotation() {
   momentPics.forEach((img, i) => {
-    const pool = momentPhotoPools[i] && momentPhotoPools[i].length > 0 ? momentPhotoPools[i] : galleryPhotos;
+    const pool =
+      momentPhotoPools[i] && momentPhotoPools[i].length > 0
+        ? momentPhotoPools[i]
+        : galleryPhotos;
     const startIdx = Math.floor(Math.random() * pool.length);
     img.dataset.pool = String(i);
     img.dataset.poolIndex = String(startIdx);
@@ -452,7 +475,10 @@ function initMomentRotation() {
 
 function cycleMoments() {
   momentPics.forEach((img, i) => {
-    const pool = momentPhotoPools[i] && momentPhotoPools[i].length > 0 ? momentPhotoPools[i] : galleryPhotos;
+    const pool =
+      momentPhotoPools[i] && momentPhotoPools[i].length > 0
+        ? momentPhotoPools[i]
+        : galleryPhotos;
     if (pool.length === 0) return;
     const current = Number.parseInt(img.dataset.poolIndex || "0", 10);
     const next = (current + 1) % pool.length;
