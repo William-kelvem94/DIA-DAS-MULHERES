@@ -1,5 +1,22 @@
 ﻿/* ── QR Code ─────────────────────── */
 
+/* Theme toggle setup */
+const themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) {
+  if (t === 'light') document.documentElement.setAttribute('data-theme','light');
+  else document.documentElement.removeAttribute('data-theme');
+  if (themeBtn) themeBtn.textContent = t === 'light' ? '🌞' : '🌙';
+}
+if (themeBtn) {
+  const saved = localStorage.theme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(saved);
+  themeBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    localStorage.theme = next;
+  });
+}
+
 /* ── Music FAB + YouTube Modal ───── */
 // when GitHub Pages serves the site the MP3 must be committed along with the
 // HTML; otherwise the <audio> element will 404. as an alternative the YouTube
@@ -171,10 +188,17 @@ setInterval(cycleMoments, 10000);
 /* ── Lightbox com navegação ──────── */
 function openLb(i) {
   lbIndex = i;
+  const lightboxEl = document.getElementById('lightbox');
   document.getElementById('lb-img').src = allPhotos[i];
-  document.getElementById('lightbox').classList.add('open');
+  lightboxEl.setAttribute('aria-hidden','false');
+  lightboxEl.classList.add('open');
+  lightboxEl.focus();
 }
-document.getElementById('lb-close').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
+document.getElementById('lb-close').addEventListener('click', () => {
+  const lb = document.getElementById('lightbox');
+  lb.setAttribute('aria-hidden','true');
+  lb.classList.remove('open');
+});
 document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
 document.getElementById('lb-prev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });
 document.getElementById('lb-next').addEventListener('click', () => { lbIndex = (lbIndex + 1) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });

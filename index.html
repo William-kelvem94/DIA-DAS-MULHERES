@@ -8,6 +8,8 @@
   <!-- botão abrir vídeo do refrão (YouTube) -->
   <!-- o refrão começa aproximadamente em 0:44s -->
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script>
     // cache‑buster: append timestamp query to versionable resources
     const ver = Date.now();
@@ -22,7 +24,10 @@
     });
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" data-versionable/>
+  <link rel="preload" href="style.css" as="style" data-versionable>
+  <link rel="preload" href="app.js" as="script" data-versionable>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>"/>
+  <link rel="manifest" href="manifest.json">
   <link rel="preload" href="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" as="image" data-versionable/>
   <link rel="stylesheet" href="style.css" data-versionable>
   <meta name="description" content="Uma homenagem interativa para Maria Gabriele no Dia das Mulheres.">
@@ -31,9 +36,11 @@
   <meta property="og:image" content="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg">
 </head>
 <body>
-
+<a href="#main" class="skip-link">Pular para o conteúdo</a>
 <div id="progress"></div>
+
 <canvas id="bg-canvas"></canvas>
+<div id="theme-toggle" aria-label="Alternar tema">🌙</div>
 <div id="music-fab">
   <div id="music-menu">
     <button class="music-opt" id="yt-open-btn">🎬 Ver clipe no YouTube</button>
@@ -63,7 +70,7 @@
 </section>
 
 <!-- ══ CONTEÚDO ════════════════════════════════════════════ -->
-<div class="wrap" role="main">
+<div class="wrap" role="main" id="main">
 
   <!-- Momento 1 -->
   <div class="moment" data-reveal>
@@ -229,11 +236,11 @@
 
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="lb-close" id="lb-close">&times;</button>
-  <button class="lb-prev" id="lb-prev">&#8249;</button>
-  <img id="lb-img" src="" alt=""/>
-  <button class="lb-next" id="lb-next">&#8250;</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lb-close" id="lb-close" aria-label="Fechar">&times;</button>
+  <button class="lb-prev" id="lb-prev" aria-label="Foto anterior">&#8249;</button>
+  <img id="lb-img" src="" alt="Visualização ampliada da foto"/>
+  <button class="lb-next" id="lb-next" aria-label="Próxima foto">&#8250;</button>
 </div>
 
 <footer>
@@ -242,8 +249,16 @@
 </footer>
 
 <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <div id="toast">Link copiado!</div>
+<script>
+// service worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
 <script src="app.js" defer data-versionable></script>
 </body>
 </html>
