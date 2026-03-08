@@ -736,7 +736,9 @@ body {
 .mosaic-item:hover .mosaic-caption,
 .mosaic-item:focus-within .mosaic-caption,
 .mosaic-item:active .mosaic-caption,
-.mosaic-caption.visible {
+.mosaic-caption.visible,
+/* ensure caption stays when cursor moves over it */
+.mosaic-caption:hover {
   opacity: 1;
   transform: translateY(0);
 }

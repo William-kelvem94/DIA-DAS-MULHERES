@@ -410,13 +410,28 @@ const mosaicCaptions = [
 // then vanished. to make labels usable we add a JS helper that keeps the
 // caption visible for a few seconds on interaction.
 if (mosaic) {
+  // clicking/tapping on a thumbnail toggles its caption. unlike the previous
+  // implementation we no longer auto-hide after a timeout, since that
+  // disrupted users who were still hovering or holding their finger on the
+  // image. click anywhere outside the mosaic to close open labels.
   mosaic.addEventListener("click", (e) => {
     const item = e.target.closest(".mosaic-item");
     if (!item) return;
     const cap = item.querySelector(".mosaic-caption");
     if (!cap) return;
-    cap.classList.add("visible");
-    setTimeout(() => cap.classList.remove("visible"), 3000);
+    const already = cap.classList.contains("visible");
+    document.querySelectorAll(".mosaic-caption.visible").forEach((c) => {
+      if (c !== cap) c.classList.remove("visible");
+    });
+    if (already) cap.classList.remove("visible");
+    else cap.classList.add("visible");
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".mosaic-item")) {
+      document
+        .querySelectorAll(".mosaic-caption.visible")
+        .forEach((c) => c.classList.remove("visible"));
+    }
   });
 }
 
