@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v7-20260308-6";
+const CACHE_VERSION = "v8-20260308-7";
 const CACHE_NAME = "dia-mulheres-" + CACHE_VERSION;
 const urlsToCache = [
   "index.html",
@@ -11,7 +11,20 @@ const urlsToCache = [
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)),
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await Promise.allSettled(
+        urlsToCache.map(async (url) => {
+          try {
+            const response = await fetch(url, { cache: "no-store" });
+            if (response && response.ok) {
+              await cache.put(url, response.clone());
+            }
+          } catch (_err) {
+            // Ignore individual preload failures to avoid blocking SW install.
+          }
+        }),
+      );
+    }),
   );
 });
 

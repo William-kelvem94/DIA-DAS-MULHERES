@@ -542,13 +542,34 @@ if (carouselElement) {
 /* ── Scroll reveal ───────────────── */
 // Lazily create the audio context to avoid autoplay restrictions before user interaction.
 let audioCtx;
+let audioReady = false;
+
+function markAudioReady() {
+  audioReady = true;
+  const ctx = getAudioCtx();
+  if (ctx.state === "suspended") {
+    ctx.resume().catch(() => {
+      // Some browsers keep blocking until another gesture; we'll retry later.
+    });
+  }
+}
+
+["pointerdown", "touchstart", "keydown"].forEach((evt) => {
+  document.addEventListener(evt, markAudioReady, { once: true, passive: true });
+});
+
 function getAudioCtx() {
   if (!audioCtx)
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
 }
 function tone(freq, dur) {
+  if (!audioReady) return;
   const ctx = getAudioCtx();
+  if (ctx.state === "suspended") {
+    ctx.resume().catch(() => {});
+    return;
+  }
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.frequency.value = freq;
