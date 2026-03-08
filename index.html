@@ -12,13 +12,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Dancing+Script:wght@600;700&family=Manrope:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet" data-versionable />
   <!-- Removing problematic preloads that are causing warnings and not being used correctly -->
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>" />
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.ba33ec11.css" data-versionable>
+  <link rel="stylesheet" href="css/style.ba33ec11.css?v=20260308-2" data-versionable>
   <meta name="description" content="Uma homenagem interativa para Maria Gabriele no Dia das Mulheres.">
   <meta property="og:title" content="💖 Para o meu Mozinho — Feliz Dia das Mulheres!">
   <meta property="og:description" content="Uma página cheia de amor com fotos e mensagens especiais.">
@@ -280,11 +280,11 @@
     // service worker registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(console.error);
+        navigator.serviceWorker.register('sw.js?v=20260308-2', { updateViaCache: 'none' }).catch(console.error);
       });
     }
   </script>
-  <script src="js/app.f37d0b4b.js" defer data-versionable></script>
+  <script src="js/app.f37d0b4b.js?v=20260308-2" defer data-versionable></script>
 </body>
 
 </html>

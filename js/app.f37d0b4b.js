@@ -111,10 +111,12 @@ momentPhotos.forEach(p=>{
 
 // click QR copy url + show toast
 const qrcodeContainer = document.getElementById('qrcode');
-qrcodeContainer.addEventListener('click', () => {
-  const link = window.location.href;
-  navigator.clipboard.writeText(link).then(() => showToast('Link copiado!'));
-});
+if (qrcodeContainer) {
+  qrcodeContainer.addEventListener('click', () => {
+    const link = window.location.href;
+    navigator.clipboard.writeText(link).then(() => showToast('Link copiado!'));
+  });
+}
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -230,10 +232,6 @@ window.addEventListener('scroll', () => {
         item.classList.add('found');
         for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}
       }
-      if(i===treasure){
-        showToast('🏆 Você encontrou o tesouro!');
-        // small confetti effect
-        for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}      }
     });
     tl.appendChild(item);
   });
@@ -376,16 +374,21 @@ if(carouselElement){
 }
 
 /* ── Scroll reveal ───────────────── */
-// audio context for short tones
-const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+// Lazily create the audio context to avoid autoplay restrictions before user interaction.
+let audioCtx;
+function getAudioCtx(){
+  if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
 function tone(freq,dur){
-  const osc=audioCtx.createOscillator();
-  const gain=audioCtx.createGain();
+  const ctx = getAudioCtx();
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
   osc.frequency.value=freq;
-  osc.connect(gain);gain.connect(audioCtx.destination);
-  osc.start();gain.gain.setValueAtTime(0.15,audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
-  osc.stop(audioCtx.currentTime+dur);
+  osc.connect(gain);gain.connect(ctx.destination);
+  osc.start();gain.gain.setValueAtTime(0.15,ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+  osc.stop(ctx.currentTime+dur);
 }
 
 const revealObs = new IntersectionObserver(entries => {

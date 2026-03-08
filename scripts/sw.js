@@ -29,7 +29,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   // dynamic caching for gallery photos
-  if (url.pathname.startsWith('/FOTOS MOZINHO/')) {
+  if (decodeURIComponent(url.pathname).includes('/FOTOS MOZINHO/')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache =>
         cache.match(event.request).then(resp =>
@@ -42,6 +42,21 @@ self.addEventListener('fetch', event => {
     );
     return;
   }
+
+  // Prefer fresh HTML/CSS/JS to avoid stale UI after deploy.
+  if (event.request.mode === 'navigate' || ['style', 'script'].includes(event.request.destination)) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResp => {
+          const clone = networkResp.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          return networkResp;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(response => response || fetch(event.request))
   );
