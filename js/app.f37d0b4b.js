@@ -592,19 +592,25 @@ function openLb(i) {
   lightboxEl.classList.add("open");
   lightboxEl.focus();
 }
-document.getElementById("lb-close").addEventListener("click", () => {
+document.getElementById("lb-close").addEventListener("click", (e) => {
+  e.stopPropagation();
   const lb = document.getElementById("lightbox");
   lb.setAttribute("aria-hidden", "true");
   lb.classList.remove("open");
 });
+
+// clicking the lightbox backdrop closes, but buttons should not bubble here
 document.getElementById("lightbox").addEventListener("click", (e) => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove("open");
 });
-document.getElementById("lb-prev").addEventListener("click", () => {
+
+document.getElementById("lb-prev").addEventListener("click", (e) => {
+  e.stopPropagation();
   lbIndex = (lbIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
   renderLightboxPhoto();
 });
-document.getElementById("lb-next").addEventListener("click", () => {
+document.getElementById("lb-next").addEventListener("click", (e) => {
+  e.stopPropagation();
   lbIndex = (lbIndex + 1) % galleryPhotos.length;
   renderLightboxPhoto();
 });
