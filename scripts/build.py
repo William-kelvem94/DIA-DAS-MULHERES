@@ -46,16 +46,16 @@ for orig, new in newnames.items():
 open(html_path,'w',encoding='utf-8').write(html)
 print('index.html updated')
 
-# update service worker
-sw_path = 'scripts/sw.js'
-if os.path.exists(sw_path):
-    sw = open(sw_path,'r',encoding='utf-8').read()
+# update service worker (and move it to root)
+sw_src = 'scripts/sw.js'
+sw_dest = 'sw.js'
+if os.path.exists(sw_src):
+    sw = open(sw_src,'r',encoding='utf-8').read()
     sw = sw.replace('__CACHE_VERSION__', version)
-    # build a fresh urlsToCache list: keep static entries and insert hashed css/js
-    urls = ["/", "/index.html"]
+    # Relative paths for GitHub Pages subfolder compatibility
+    urls = ["index.html", "./"]
     for orig,new in newnames.items():
-        # convert path to leading-slash form
-        urls.append('/' + new.replace('\\','/'))
+        urls.append(new.replace('\\','/'))
     # preserve any other hardcoded assets (like mp3) already in sw.js
     # find existing non-js/css entries
     extra = []
@@ -67,6 +67,10 @@ if os.path.exists(sw_path):
                 if val not in urls:
                     extra.append(val)
     urls.extend(extra)
+    # ensure MP3 is cached correctly without leading slash
+    if 'assets/music/music.mp3' not in urls:
+        urls.append('assets/music/music.mp3')
+    
     # reconstruct the array block
     arr = "const urlsToCache = [\n"
     for u in urls:
@@ -74,5 +78,5 @@ if os.path.exists(sw_path):
     arr += "];"
     # replace old block
     sw = re.sub(r"const urlsToCache = \[[\s\S]*?\];", arr, sw)
-    open(sw_path,'w',encoding='utf-8').write(sw)
-    print('sw.js updated')
+    open(sw_dest,'w',encoding='utf-8').write(sw)
+    print('sw.js updated and moved to root')

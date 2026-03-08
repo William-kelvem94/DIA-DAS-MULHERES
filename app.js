@@ -388,20 +388,23 @@ if (carouselElement) {
 }
 
 /* ── Scroll reveal ───────────────── */
-// audio context for short tones (lazy initialize to avoid autoplay policy errors)
+// audio context for short tones
 let audioCtx;
-function getAudioCtx() {
+function initAudio() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
-  return audioCtx;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 }
+// global unlock on first click
+document.addEventListener('click', initAudio, { once: true });
+document.addEventListener('touchstart', initAudio, { once: true });
 function tone(freq, dur) {
-  const ctx = getAudioCtx();
-  if (ctx.state === 'suspended') {
-    // Only try to resume if it was already created, but we'll try to get it first
-    ctx.resume();
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
   }
+  const ctx = audioCtx;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.frequency.value = freq;

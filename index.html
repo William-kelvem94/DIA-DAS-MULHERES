@@ -11,19 +11,6 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <script>
-    // cache‑buster: append timestamp query to versionable resources
-    const ver = Date.now();
-    function tag(type, attr) {
-      document.querySelectorAll(type + '[data-versionable]').forEach(el => {
-        el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + ver;
-      });
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-      tag('link', 'href');
-      tag('script', 'src');
-    });
-  </script>
   <link
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap"
     rel="stylesheet" data-versionable />
@@ -293,7 +280,7 @@
     // service worker registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('scripts/sw.js').catch(console.error);
+        navigator.serviceWorker.register('sw.js').catch(console.error);
       });
     }
   </script>
