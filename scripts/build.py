@@ -51,7 +51,8 @@ sw_src = 'scripts/sw.js'
 sw_dest = 'sw.js'
 if os.path.exists(sw_src):
     sw = open(sw_src,'r',encoding='utf-8').read()
-    sw = sw.replace('__CACHE_VERSION__', version)
+    sw = sw.replace("REPLACE_ME", f"{version}-{int(os.path.getmtime(sw_src))}")
+    # Relative paths for GitHub Pages subfolder compatibility
     # Relative paths for GitHub Pages subfolder compatibility
     urls = ["index.html", "./"]
     for orig,new in newnames.items():
