@@ -18,7 +18,7 @@ def draw_heart(img):
     # blur slightly for softness
     return img.filter(ImageFilter.GaussianBlur(1))
 
-for size,name in [(192,'icon-192.png'),(512,'icon-512.png')]:
+for size,name in [(192,'assets/icons/icon-192.png'),(512,'assets/icons/icon-512.png')]:
     base = Image.new('RGBA',(size,size),(0,0,0,0))
     heart = draw_heart(Image.new('RGBA',(size,size),(236,72,153)))
     base.paste(heart,(0,0),heart)

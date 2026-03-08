@@ -33,12 +33,16 @@ version = '-'.join(hashes)
 html_path = 'index.html'
 html = open(html_path,'r',encoding='utf-8').read()
 for orig, new in newnames.items():
-    # orig appears in index without directory prefix when referenced earlier
-    # but now assets are referenced with dir prefix; ensure we replace accordingly.
-    html = re.sub(rf"\b{re.escape(orig)}\b", new, html)
-    # also replace basename occurrences if any
+    # use forward slashes for HTML paths
+    new_url = new.replace('\\', '/')
+    orig_url = orig.replace('\\', '/')
+    # Replace the actual asset path with the hashed version
+    html = html.replace(orig_url, new_url)
+    # Also handle references without dir prefix if they exist
     base = os.path.basename(orig)
-    html = re.sub(rf"\b{re.escape(base)}\b", new, html)
+    new_base = os.path.basename(new)
+    html = html.replace(base, new_base)
+
 open(html_path,'w',encoding='utf-8').write(html)
 print('index.html updated')
 

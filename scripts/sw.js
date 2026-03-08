@@ -5,7 +5,7 @@ const urlsToCache = [
   '/index.html',
   '/css/style.ba33ec11.css',
   '/js/app.f37d0b4b.js',
-  '/The Weeknd_ Ariana Grande - Die For You (Remix _ Lyric Video)(MP3_320K)_1.mp3',
+  '/assets/music/music.mp3',
 ];
 
 self.addEventListener('install', event => {
@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => 
+    caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
     )
   );
