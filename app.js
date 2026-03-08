@@ -361,6 +361,17 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
 
+// Parallax effect on hero
+document.addEventListener('mousemove', (e) => {
+  if (window.innerWidth < 1000) return;
+  const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+  const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+  const heroContent = document.querySelector('.hero-content');
+  if (heroContent) {
+    heroContent.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  }
+});
+
 // Swipe support for mobile on carousel
 let startX = 0;
 const carouselElement = document.getElementById('carousel');
@@ -377,16 +388,27 @@ if (carouselElement) {
 }
 
 /* ── Scroll reveal ───────────────── */
-// audio context for short tones
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// audio context for short tones (lazy initialize to avoid autoplay policy errors)
+let audioCtx;
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
 function tone(freq, dur) {
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
+  const ctx = getAudioCtx();
+  if (ctx.state === 'suspended') {
+    // Only try to resume if it was already created, but we'll try to get it first
+    ctx.resume();
+  }
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
   osc.frequency.value = freq;
-  osc.connect(gain); gain.connect(audioCtx.destination);
-  osc.start(); gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-  osc.stop(audioCtx.currentTime + dur);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(); gain.gain.setValueAtTime(0.15, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+  osc.stop(ctx.currentTime + dur);
 }
 
 const revealObs = new IntersectionObserver(entries => {
@@ -407,9 +429,10 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 /* ── Typewriter ──────────────────── */
 const phrases = [
   "Minha parceira de vida e de código 💻",
-  "Feliz Dia das Mulheres, meu amor ❤️",
-  "Obrigado por cuidar tanto de mim 🌸",
-  "Com você, todo bug tem solução 💫",
+  "Em um mundo de bugs, você é minha melhor feature 🌟",
+  "Você é o commit mais importante da minha vida ❤️",
+  "Feliz Dia das Mulheres, meu amor 🌸",
+  "Com você, todo sistema funciona em harmonia 💫",
 ];
 let pi = 0, ci = 0, deleting = false;
 function type() {
