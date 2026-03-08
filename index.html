@@ -9,6 +9,7 @@
   <!-- o refrão começa aproximadamente em 0:44s -->
 
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>"/>
   <link rel="preload" href="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" as="image" />
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -243,8 +244,9 @@
     .mosaic img{
       width:100%;border-radius:16px;
       display:block;object-fit:cover;aspect-ratio:4/5;
-      transition:transform 0.35s ease,box-shadow 0.35s ease;cursor:pointer
+      transition:transform 0.35s ease,box-shadow 0.35s ease, filter 0.35s ease;cursor:pointer
     }
+    .mosaic img:hover{transform:scale(1.04);box-shadow:0 14px 38px rgba(240,98,146,0.38); filter: brightness(1.1) saturate(1.2);}
 
     /* banners pulse on hover */
     .banner:hover{transform:scale(1.035);box-shadow:0 32px 78px rgba(240,98,146,0.48);animation:pulse 1.6s ease-in-out infinite}
@@ -392,7 +394,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">✨ Minha inspiração</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" alt="Nós sorrindo juntos"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg" alt="Nós sorrindo juntos"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -410,7 +412,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">💜 Lado a lado</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03.jpeg" alt="Abraço nosso"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg" alt="Abraço nosso"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -439,7 +441,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">💻 Meu melhor projeto</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05.jpeg" alt="Nós de mãos dadas"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg" alt="Nós de mãos dadas"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -458,7 +460,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">🌙 Meu porto seguro</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06.jpeg" alt="Abraço acolhedor"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg" alt="Abraço acolhedor"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -476,7 +478,7 @@
   <div class="moment" data-reveal>
     <div class="photo-frame">
       <span class="photo-badge">🌟 Todo meu respeito</span>
-      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08.jpeg" alt="Nós felizes"/>
+      <img class="moment-photo" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg" alt="Nós felizes"/>
     </div>
     <div class="moment-card">
       <p class="moment-text">
@@ -685,35 +687,24 @@ window.addEventListener('scroll', () => {
 
 /* ── Galeria mosaico ─────────────── */
 const allPhotos = [
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (3).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (4).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (3).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04.jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (3).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (4).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (3).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (4).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (5).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (2).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (3).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (4).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (2).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg",
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (2).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (3).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (4).jpeg",
   "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.08 (5).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg",
-  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09.jpeg"
+  "FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.09 (1).jpeg"
 ];
 
 let lbIndex = 0;
