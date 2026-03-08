@@ -23,7 +23,7 @@
     <link rel="manifest" href="manifest.json" />
     <link
       rel="stylesheet"
-      href="css/style.ba33ec11.css?v=20260308-8"
+      href="css/style.ba33ec11.css?v=20260308-9"
       data-versionable
     />
     <meta
@@ -390,17 +390,32 @@
     ></script>
     <div id="toast">Link copiado!</div>
     <script>
-      // service worker registration
+      // Service worker registration with legacy cleanup for GitHub Pages.
       if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("sw.js?v=20260308-8", { updateViaCache: "none" })
-            .catch(console.error);
+        window.addEventListener("load", async () => {
+          try {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+              regs.map(async (reg) => {
+                const scriptUrl = reg.active?.scriptURL || reg.installing?.scriptURL || reg.waiting?.scriptURL || "";
+                if (scriptUrl.includes("/scripts/sw.js")) {
+                  await reg.unregister();
+                }
+              }),
+            );
+
+            const reg = await navigator.serviceWorker.register("sw.js?v=20260308-9", {
+              updateViaCache: "none",
+            });
+            reg.update().catch(() => {});
+          } catch (err) {
+            console.error(err);
+          }
         });
       }
     </script>
     <script
-      src="js/app.f37d0b4b.js?v=20260308-8"
+      src="js/app.f37d0b4b.js?v=20260308-9"
       defer
       data-versionable
     ></script>
