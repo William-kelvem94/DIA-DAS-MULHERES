@@ -189,7 +189,7 @@ body {
 
 /* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .hero {
-  min-height: 100vh;
+  min-height: 100svh;
   background:
     radial-gradient(
       ellipse 80% 60% at 20% 30%,
@@ -212,6 +212,17 @@ body {
   z-index: 1;
   overflow: hidden;
 }
+
+.hero-content {
+  width: min(100%, 980px);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .hero::before {
   content: "";
   position: absolute;
@@ -257,6 +268,7 @@ body {
   text-shadow: 0 0 60px rgba(236, 72, 153, 0.55);
   line-height: 1.2;
   max-width: 660px;
+  margin-inline: auto;
   letter-spacing: -0.5px;
   animation: fadeUp 1s ease 0.3s both;
 }
@@ -265,6 +277,7 @@ body {
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.82);
   max-width: 520px;
+  margin-inline: auto;
   line-height: 1.9;
   font-weight: 300;
   font-family: var(--font-main);
@@ -282,6 +295,7 @@ body {
   font-weight: 600;
   color: var(--rose);
   margin-top: 24px;
+  text-align: center;
   min-height: 2.4rem;
   animation: fadeUp 0.8s ease 1s both;
 }

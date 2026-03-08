@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v5-REPLACE_ME";
+const CACHE_VERSION = "v6-REPLACE_ME";
 const CACHE_NAME = "dia-mulheres-" + CACHE_VERSION;
 const urlsToCache = [
   "index.html",
