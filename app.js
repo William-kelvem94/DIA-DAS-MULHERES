@@ -204,6 +204,7 @@ window.addEventListener('scroll', () => {
   const tl = document.getElementById('timeline');
   if (!tl) return;
   const moments = document.querySelectorAll('.moment');
+  const treasure = Math.floor(Math.random()*moments.length);
   moments.forEach((m,i)=>{
     const pic = m.querySelector('.moment-photo');
     const badge = m.querySelector('.photo-badge')?.textContent || '';
@@ -224,6 +225,15 @@ window.addEventListener('scroll', () => {
       if(img){
         img.animate([{transform:'scale(1)'},{transform:'scale(1.12)'}],{duration:400,iterations:2, direction:'alternate'});
       }
+      if(i===treasure){
+        showToast('🏆 Você encontrou o tesouro!');
+        item.classList.add('found');
+        for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}
+      }
+      if(i===treasure){
+        showToast('🏆 Você encontrou o tesouro!');
+        // small confetti effect
+        for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}      }
     });
     tl.appendChild(item);
   });
@@ -302,7 +312,25 @@ setInterval(cycleMoments, 10000);
 function openLb(i) {
   lbIndex = i;
   const lightboxEl = document.getElementById('lightbox');
-  document.getElementById('lb-img').src = allPhotos[i];
+  const carousel = document.getElementById('carousel');
+  // build slides if empty
+  if (carousel.children.length === 0) {
+    const count = allPhotos.length;
+    const angle = 360 / count;
+    allPhotos.forEach((src,j)=>{
+      const slide = document.createElement('div');
+      slide.className='slide';
+      slide.style.transform = `rotateY(${j*angle}deg) translateZ(600px)`;
+      const img = document.createElement('img');
+      img.src = encodeURI(src.replace(/\.jpe?g$/i,'.webp'));
+      img.alt = 'Memória';
+      slide.appendChild(img);
+      carousel.appendChild(slide);
+    });
+  }
+  // rotate to index
+  const angle = 360 / allPhotos.length;
+  carousel.style.transform = `translateZ(-600px) rotateY(${-i*angle}deg)`;
   lightboxEl.setAttribute('aria-hidden','false');
   lightboxEl.classList.add('open');
   lightboxEl.focus();
@@ -313,8 +341,18 @@ document.getElementById('lb-close').addEventListener('click', () => {
   lb.classList.remove('open');
 });
 document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
-document.getElementById('lb-prev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });
-document.getElementById('lb-next').addEventListener('click', () => { lbIndex = (lbIndex + 1) % allPhotos.length; document.getElementById('lb-img').src = allPhotos[lbIndex]; });
+document.getElementById('lb-prev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length;
+  const carousel = document.getElementById('carousel');
+  const angle = 360 / allPhotos.length;
+  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % allPhotos.length;
+  const carousel = document.getElementById('carousel');
+  const angle = 360 / allPhotos.length;
+  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
+});
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
   if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
@@ -322,18 +360,20 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
 
-// Swipe support for mobile
+// Swipe support for mobile on carousel
 let startX = 0;
-const lbImg = document.getElementById('lb-img');
-lbImg.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-lbImg.addEventListener('touchend', e => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = startX - endX;
-  if (Math.abs(diff) > 50) { // threshold
-    if (diff > 0) document.getElementById('lb-next').click(); // swipe left
-    else document.getElementById('lb-prev').click(); // swipe right
-  }
-});
+const carouselElement = document.getElementById('carousel');
+if(carouselElement){
+  carouselElement.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  carouselElement.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+    if (Math.abs(diff) > 50) { // threshold
+      if (diff > 0) document.getElementById('lb-next').click(); // swipe left
+      else document.getElementById('lb-prev').click(); // swipe right
+    }
+  });
+}
 
 /* ── Scroll reveal ───────────────── */
 // audio context for short tones
