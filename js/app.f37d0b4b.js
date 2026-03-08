@@ -218,6 +218,8 @@ if (themeBtn) {
 // cache nodes used by scroll handler to avoid querying repeatedly
 const heroEl = document.querySelector(".hero");
 const hintEl = document.querySelector(".scroll-hint");
+const canvasEl = document.getElementById("bg-canvas");
+let lastProgressUpdate = 0;
 window.addEventListener(
   "scroll",
   () => {
@@ -232,11 +234,25 @@ window.addEventListener(
       hintEl.classList.add("ripple");
       setTimeout(() => hintEl.classList.remove("ripple"), 600);
     }
-    if (!tick) {
+    // hide canvas while scrolling to reduce paint cost
+    if (canvasEl) canvasEl.style.visibility = "hidden";
+
+    // throttle progress updates to no more than 30Hz
+    const now = performance.now();
+    if (now - lastProgressUpdate > 33 && !tick) {
+      lastProgressUpdate = now;
       window.requestAnimationFrame(() => {
         const pct =
           (y / (document.body.scrollHeight - window.innerHeight)) * 100;
         progressEl.style.width = pct + "%";
+        tick = false;
+        // restore canvas once progress has been painted
+        if (canvasEl) canvasEl.style.visibility = "visible";
+      });
+      tick = true;
+    } else if (!tick) {
+      // still schedule an rAF to clear tick flag quickly
+      window.requestAnimationFrame(() => {
         tick = false;
       });
       tick = true;
