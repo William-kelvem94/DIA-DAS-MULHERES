@@ -215,28 +215,35 @@ if (themeBtn) {
   });
 }
 
-window.addEventListener("scroll", () => {
-  // hero shrink
-  const hero = document.querySelector(".hero");
-  if (window.scrollY > 120) hero.classList.add("shrink");
-  else hero.classList.remove("shrink");
-  // ripple effect on scroll hint
-  const hint = document.querySelector(".scroll-hint");
-  if (window.scrollY > 80 && hint) {
-    hint.classList.add("ripple");
-    setTimeout(() => hint.classList.remove("ripple"), 600);
-  }
-  if (!tick) {
-    window.requestAnimationFrame(() => {
-      const pct =
-        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
-        100;
-      progressEl.style.width = pct + "%";
-      tick = false;
-    });
-    tick = true;
-  }
-});
+// cache nodes used by scroll handler to avoid querying repeatedly
+const heroEl = document.querySelector(".hero");
+const hintEl = document.querySelector(".scroll-hint");
+window.addEventListener(
+  "scroll",
+  () => {
+    const y = window.scrollY;
+    // hero shrink
+    if (heroEl) {
+      if (y > 120) heroEl.classList.add("shrink");
+      else heroEl.classList.remove("shrink");
+    }
+    // ripple effect on scroll hint
+    if (hintEl && y > 80) {
+      hintEl.classList.add("ripple");
+      setTimeout(() => hintEl.classList.remove("ripple"), 600);
+    }
+    if (!tick) {
+      window.requestAnimationFrame(() => {
+        const pct =
+          (y / (document.body.scrollHeight - window.innerHeight)) * 100;
+        progressEl.style.width = pct + "%";
+        tick = false;
+      });
+      tick = true;
+    }
+  },
+  { passive: true }
+);
 
 /* ── Timeline horizontal ───────────── */
 (function () {
