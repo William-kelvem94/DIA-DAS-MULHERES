@@ -25,13 +25,28 @@
 }
 
 /* â”€â”€ Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-html{scroll-behavior:smooth;font-size:17px;overflow-x:hidden;overflow-y:scroll}
+html{
+  scroll-behavior:smooth;
+  font-size:17px;
+  overflow-x:hidden;
+  overflow-y:auto;
+  scrollbar-gutter:stable;
+}
+/* Scrollbar fina e discreta */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.35);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--violet)}
+*{scrollbar-width:thin;scrollbar-color:rgba(139,92,246,0.35) transparent}
+
 body{
   font-family:'Lato',sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
   overflow-x:hidden;
 }
 
@@ -80,15 +95,18 @@ body{
 }
 .hero h1{
   font-family:'Dancing Script',cursive;
-  font-size:clamp(2.4rem,8vw,4.4rem);
+  font-size:clamp(2.6rem,8vw,4.6rem);
+  font-weight:700;
   color:#fff;text-shadow:0 0 60px rgba(236,72,153,0.55);
-  line-height:1.2;max-width:640px;
+  line-height:1.2;max-width:660px;
+  letter-spacing:-0.5px;
   animation:fadeUp 1s ease 0.3s both;
 }
 .hero-sub{
   margin-top:24px;font-size:1.05rem;
   color:rgba(255,255,255,0.82);
-  max-width:520px;line-height:1.85;font-weight:300;
+  max-width:520px;line-height:1.9;font-weight:300;
+  font-family:'Lato',sans-serif;
   background:rgba(255,255,255,0.06);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -98,9 +116,10 @@ body{
 }
 .typewriter{
   font-family:'Dancing Script',cursive;
-  font-size:clamp(1.15rem,3.5vw,1.6rem);
+  font-size:clamp(1.2rem,3.5vw,1.65rem);
+  font-weight:600;
   color:var(--rose);margin-top:24px;
-  min-height:2.2rem;
+  min-height:2.4rem;
   animation:fadeUp 0.8s ease 1s both;
 }
 .scroll-hint{
@@ -213,13 +232,17 @@ body{
 }
 .moment-text{
   font-family:'Playfair Display',serif;
-  font-size:1.05rem;line-height:1.92;
-  color:rgba(241,232,255,0.88);
+  font-size:1.08rem;line-height:1.95;
+  color:rgba(241,232,255,0.90);
   font-style:italic;
+  font-feature-settings:'kern' 1,'liga' 1;
 }
 .moment-author{
-  margin-top:16px;font-size:0.8rem;
-  color:var(--gold);letter-spacing:0.5px;
+  margin-top:18px;font-size:0.82rem;
+  font-family:'Lato',sans-serif;
+  font-weight:400;
+  color:var(--gold);letter-spacing:1px;
+  text-transform:uppercase;
 }
 
 /* â”€â”€ BANNER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -269,35 +292,43 @@ body{
   text-align:center;
   font-family:'Dancing Script',cursive;
   font-size:clamp(2rem,6vw,2.8rem);
+  font-weight:700;
   background:linear-gradient(135deg,var(--violet),var(--rose));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .section-sub{
-  text-align:center;font-size:0.88rem;
-  color:var(--muted);margin-bottom:36px;
+  text-align:center;font-size:0.87rem;
+  font-family:'Lato',sans-serif;
+  letter-spacing:0.5px;
+  color:var(--muted);margin-bottom:40px;
 }
+/* ── Mosaico masonry ── */
 .mosaic{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
-  gap:12px;padding:8px 0;
+  columns:170px;
+  column-gap:10px;
+  padding:4px 0;
 }
 .mosaic img{
-  width:100%;border-radius:var(--r-md);
-  aspect-ratio:3/4;object-fit:cover;display:block;
+  width:calc(100% - 2px);
+  margin-bottom:10px;
+  break-inside:avoid;
+  display:block;
+  border-radius:var(--r-md);
+  object-fit:cover;
   cursor:pointer;
-  border:2px solid rgba(255,255,255,0.06);
-  box-shadow:0 8px 24px rgba(0,0,0,0.45);
-  transform:rotate(calc(-2deg + 4deg * var(--rand)));
-  transition:transform 0.4s ease,box-shadow 0.4s ease,filter 0.4s ease;
+  border:2px solid rgba(255,255,255,0.07);
+  box-shadow:0 6px 20px rgba(0,0,0,0.5);
+  transform:none;
+  transition:transform 0.35s ease,box-shadow 0.35s ease,filter 0.35s ease;
   position:relative;
 }
 .mosaic img:hover{
-  transform:scale(1.08) rotate(0deg);
-  box-shadow:0 16px 48px var(--glow-rose);
-  filter:brightness(1.12) saturate(1.2);
+  transform:scale(1.04) translateY(-2px);
+  box-shadow:0 14px 44px var(--glow-rose);
+  filter:brightness(1.10) saturate(1.18);
   z-index:2;
 }
 
@@ -316,9 +347,9 @@ body{
   transition:opacity 0.8s ease,transform 0.8s ease;
 }
 .letter::before{
-  content:'ðŸ’Œ';
+  content:'\01F48C';
   position:absolute;top:24px;right:28px;
-  font-size:2.5rem;opacity:0.08;
+  font-size:2.5rem;opacity:0.10;
 }
 .letter::after{
   content:'';position:absolute;inset:0;
@@ -327,19 +358,23 @@ body{
 }
 .letter.visible{opacity:1;transform:translateY(0)}
 .letter-header{
-  font-family:'Dancing Script',cursive;font-size:2.2rem;
+  font-family:'Dancing Script',cursive;
+  font-size:2.3rem;
+  font-weight:700;
   background:linear-gradient(135deg,var(--violet),var(--rose));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;margin-bottom:24px;
+  background-clip:text;margin-bottom:28px;
 }
 .letter p{
-  font-size:1rem;line-height:2.1;
-  color:rgba(241,232,255,0.82);margin-bottom:20px;
+  font-family:'Playfair Display',serif;
+  font-size:1.02rem;line-height:2.05;
+  color:rgba(241,232,255,0.84);margin-bottom:20px;
 }
 .letter-sign{
   font-family:'Dancing Script',cursive;
-  font-style:normal;font-size:1.7rem;
-  color:var(--gold);margin-top:28px;
+  font-style:normal;font-size:1.8rem;
+  font-weight:700;
+  color:var(--gold);margin-top:30px;
 }
 
 /* â”€â”€ QR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -493,7 +528,7 @@ footer strong{color:var(--rose)}
   html{font-size:15px}
   .hero h1{font-size:2.2rem}
   .hero-sub{font-size:0.95rem;padding:20px 22px}
-  .mosaic{grid-template-columns:repeat(2,1fr);gap:8px}
+  .mosaic{columns:2;column-gap:8px}
   .moment{padding:44px 0;gap:22px}
   .photo-frame{max-width:100%}
   .moment-card{padding:32px 24px}
