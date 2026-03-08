@@ -82,6 +82,33 @@ function showToast(msg) {
   setTimeout(() => { t.style.opacity = '0'; }, 1800);
 }
 
+// easter egg keyboard sequence
+(()=>{
+  const seq=['a','m','o','r']; let idx=0;
+  document.addEventListener('keydown',e=>{
+    if(e.key.toLowerCase()===seq[idx]){
+      idx++;
+      if(idx===seq.length){
+        showToast('📝 Segredo: você é minha razão!');
+        idx=0;
+      }
+    } else idx=0;
+  });
+})();
+
+// photo triple click messages
+const momentPhotos = document.querySelectorAll('.moment-photo');
+momentPhotos.forEach(p=>{
+  let clicks=0;
+  p.addEventListener('click',()=>{
+    clicks++;
+    setTimeout(()=>{clicks=0},600);
+    if(clicks===3){
+      showToast('💖 Três vezes e você ganhou meu coração');
+    }
+  });
+});
+
 // click QR copy url + show toast
 const qrcodeContainer = document.getElementById('qrcode');
 qrcodeContainer.addEventListener('click', () => {
@@ -153,6 +180,15 @@ if (themeBtn) {
 }
 
 window.addEventListener('scroll', () => {
+  // hero shrink
+  const hero = document.querySelector('.hero');
+  if(window.scrollY > 120) hero.classList.add('shrink'); else hero.classList.remove('shrink');
+  // ripple effect on scroll hint
+  const hint = document.querySelector('.scroll-hint');
+  if(window.scrollY > 80 && hint){
+    hint.classList.add('ripple');
+    setTimeout(()=>hint.classList.remove('ripple'),600);
+  }
   if (!tick) {
     window.requestAnimationFrame(() => {
       const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
@@ -162,6 +198,43 @@ window.addEventListener('scroll', () => {
     tick = true;
   }
 });
+
+/* ── Timeline horizontal ───────────── */
+(function(){
+  const tl = document.getElementById('timeline');
+  if (!tl) return;
+  const moments = document.querySelectorAll('.moment');
+  moments.forEach((m,i)=>{
+    const pic = m.querySelector('.moment-photo');
+    const badge = m.querySelector('.photo-badge')?.textContent || '';
+    const item = document.createElement('div');
+    item.className='tl-item';
+    const img = document.createElement('img');
+    img.src = pic ? pic.src : '';
+    img.alt = badge;
+    item.appendChild(img);
+    const lbl = document.createElement('div');
+    lbl.className='tl-label';
+    lbl.textContent = badge;
+    item.appendChild(lbl);
+    item.addEventListener('click',()=>{
+      // scroll to corresponding moment
+      m.scrollIntoView({behavior:'smooth', block:'center'});
+      const img = m.querySelector('.moment-photo');
+      if(img){
+        img.animate([{transform:'scale(1)'},{transform:'scale(1.12)'}],{duration:400,iterations:2, direction:'alternate'});
+      }
+    });
+    tl.appendChild(item);
+  });
+  // keyboard navigation
+  tl.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight') tl.scrollBy({left:240,behavior:'smooth'});
+    if(e.key==='ArrowLeft') tl.scrollBy({left:-240,behavior:'smooth'});
+  });
+  tl.addEventListener('focus', ()=>{ document.body.style.overflow='hidden'; });
+  tl.addEventListener('blur', ()=>{ document.body.style.overflow=''; });
+})();
 
 /* ── Galeria mosaico ─────────────── */
 const allPhotos = [
@@ -263,8 +336,30 @@ lbImg.addEventListener('touchend', e => {
 });
 
 /* ── Scroll reveal ───────────────── */
+// audio context for short tones
+const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+function tone(freq,dur){
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.frequency.value=freq;
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.start();gain.gain.setValueAtTime(0.15,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+  osc.stop(audioCtx.currentTime+dur);
+}
+
 const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      if (e.target.classList.contains('moment')) {
+        const idx = parseInt(e.target.dataset.index||0,10);
+        const freq = 350 + idx * 40;
+        tone(freq,0.3);
+      }
+      revealObs.unobserve(e.target);
+    }
+  });
 }, { threshold: 0.1 });
 document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
