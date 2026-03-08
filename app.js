@@ -103,6 +103,55 @@ window.addEventListener('DOMContentLoaded', () => {
 /* ── Progress bar ────────────────── */
 const progressEl = document.getElementById('progress');
 let tick = false;
+
+// paint-based phases
+if ('PerformanceObserver' in window) {
+  const phaseColors = {
+    'first-paint': 'var(--rose)',
+    'first-contentful-paint': 'var(--violet)',
+    'largest-contentful-paint': 'var(--gold)'
+  };
+  const obs = new PerformanceObserver(list => {
+    list.getEntries().forEach(e => {
+      if (phaseColors[e.name]) {
+        progressEl.style.background = phaseColors[e.name];
+        // animate width to a fraction depending on step
+        let w = 0;
+        if (e.name === 'first-paint') w = 15;
+        else if (e.name === 'first-contentful-paint') w = 35;
+        else if (e.name === 'largest-contentful-paint') w = 65;
+        progressEl.style.width = w + '%';
+      }
+    });
+  });
+  obs.observe({type:'paint', buffered:true});
+}
+
+window.addEventListener('load', () => {
+  progressEl.style.transition = 'width 1.2s ease,inset 0.3s';
+  progressEl.style.background = 'var(--gold)';
+  progressEl.style.width = '100%';
+  setTimeout(()=>{progressEl.style.width='0%';}, 1200);
+});
+
+// theme picker cycle
+const themeBtn = document.getElementById('theme-toggle');
+const themes = ['','rose','paper'];
+if (themeBtn) {
+  let idx = themes.indexOf(localStorage.theme) >=0 ? themes.indexOf(localStorage.theme) : 0;
+  function apply(t) {
+    if (t) document.documentElement.setAttribute('data-theme',t);
+    else document.documentElement.removeAttribute('data-theme');
+    localStorage.theme = t;
+    themeBtn.textContent = t==='rose'? '🌹': t==='paper'?'📜':'🌙';
+  }
+  apply(themes[idx]);
+  themeBtn.addEventListener('click', () => {
+    idx = (idx+1) % themes.length;
+    apply(themes[idx]);
+  });
+}
+
 window.addEventListener('scroll', () => {
   if (!tick) {
     window.requestAnimationFrame(() => {

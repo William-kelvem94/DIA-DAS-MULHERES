@@ -61,6 +61,43 @@ body{
 }
 .skip-link:focus{transform:translateY(0%);}
 
+/* theme toggle button */
+#theme-toggle{
+  position:fixed;bottom:24px;right:24px;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--violet);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px var(--glow-vio);
+  cursor:pointer;font-size:1.2rem;
+  transition:transform 0.2s,background 0.2s;
+  z-index:1001;
+}
+#theme-toggle:hover{transform:scale(1.1);}
+
+/* additional themes */
+:root[data-theme="rose"]{
+  --bg:#290611;
+  --surface:#3b0d1e;
+  --glass:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.12);
+  --rose:#ff6699;
+  --violet:#bb33ff;
+  --gold:#ffcc66;
+  --text:#ffe6f0;
+  --muted:rgba(255,230,240,0.6);
+}
+:root[data-theme="paper"]{
+  --bg:#faf3e0;
+  --surface:#ffffff;
+  --glass:rgba(0,0,0,0.02);
+  --border:rgba(0,0,0,0.08);
+  --rose:#d97706;
+  --violet:#7c3aed;
+  --gold:#b45309;
+  --text:#333333;
+  --muted:rgba(51,51,51,0.24);
+}
+
 
 /* â”€â”€ Canvas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}

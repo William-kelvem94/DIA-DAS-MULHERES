@@ -23,6 +23,21 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  // dynamic caching for gallery photos
+  if (url.pathname.startsWith('/FOTOS MOZINHO/')) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache =>
+        cache.match(event.request).then(resp =>
+          resp || fetch(event.request).then(fetchResp => {
+            cache.put(event.request, fetchResp.clone());
+            return fetchResp;
+          })
+        )
+      )
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then(response => response || fetch(event.request))
   );
