@@ -93,7 +93,7 @@ window.addEventListener('DOMContentLoaded', () => {
   new QRCode(document.getElementById('qrcode'), {
     text: window.location.href,
     width: 152, height: 152,
-    colorDark: '#880e4f',
+    colorDark: '#7c3aed',
     colorLight: '#ffffff',
     correctLevel: QRCode.CorrectLevel.H
   });
