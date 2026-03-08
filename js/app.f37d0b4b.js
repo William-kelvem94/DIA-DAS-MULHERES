@@ -397,12 +397,12 @@ let lbIndex = 0;
 const mosaic = document.getElementById("mosaic");
 const mosaicCaptions = [
   "Minha conselheira, minha amiga e minha namorada.",
-  "A parceira perfeita pra qualquer role da vida.",
+  "A parceira perfeita pra qualquer rolê da vida.",
   "A mulher que domina 100% da minha atenção.",
   "O motivo de eu querer ser um homem melhor todos os dias.",
   "Meu fechamento. Ontem, hoje e sempre.",
   "O sorriso que eu mais amo no mundo inteiro.",
-  "Com voce, ate as segundas-feiras sao boas.",
+  "Com você, até as segundas-feiras são boas.",
 ];
 
 galleryPhotos.forEach((src, i) => {
