@@ -415,17 +415,54 @@ galleryPhotos.forEach((src, i) => {
   mosaic.appendChild(picture);
 });
 
-// rotate moment photos periodically (rodízio)
+// Curated rotation per section so each text block keeps a coherent visual mood.
 const momentPics = Array.from(document.querySelectorAll(".moment-photo"));
-function cycleMoments() {
-  if (momentPics.length === 0) return;
-  const lastSrc = momentPics[momentPics.length - 1].src;
-  for (let i = momentPics.length - 1; i > 0; i--) {
-    momentPics[i].src = momentPics[i - 1].src;
-  }
-  momentPics[0].src = lastSrc;
+
+function byBatch(label) {
+  return galleryPhotos.filter((src) => src.includes(label));
 }
-setInterval(cycleMoments, 10000);
+
+const momentPhotoPools = [
+  byBatch("11.36.03"), // inspiração
+  byBatch("11.36.04"), // lado a lado
+  byBatch("11.36.05"), // melhor projeto
+  byBatch("11.36.06"), // porto seguro
+  byBatch("11.36.07"), // respeito
+];
+
+const bonusPhotos = galleryPhotos.filter((src) => src.includes("2026-03-08"));
+bonusPhotos.forEach((src, idx) => {
+  momentPhotoPools[idx % momentPhotoPools.length].push(src);
+});
+
+function applyMomentPhoto(imgEl, src) {
+  imgEl.style.opacity = "1";
+  setBestSource(imgEl, src);
+}
+
+function initMomentRotation() {
+  momentPics.forEach((img, i) => {
+    const pool = momentPhotoPools[i] && momentPhotoPools[i].length > 0 ? momentPhotoPools[i] : galleryPhotos;
+    const startIdx = Math.floor(Math.random() * pool.length);
+    img.dataset.pool = String(i);
+    img.dataset.poolIndex = String(startIdx);
+    applyMomentPhoto(img, pool[startIdx]);
+  });
+}
+
+function cycleMoments() {
+  momentPics.forEach((img, i) => {
+    const pool = momentPhotoPools[i] && momentPhotoPools[i].length > 0 ? momentPhotoPools[i] : galleryPhotos;
+    if (pool.length === 0) return;
+    const current = Number.parseInt(img.dataset.poolIndex || "0", 10);
+    const next = (current + 1) % pool.length;
+    img.dataset.poolIndex = String(next);
+    applyMomentPhoto(img, pool[next]);
+  });
+}
+
+initMomentRotation();
+setInterval(cycleMoments, 9000);
 
 /* ── Lightbox com navegação ──────── */
 let lbMainImage;
