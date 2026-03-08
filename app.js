@@ -199,11 +199,18 @@ const allPhotos = [
 let lbIndex = 0;
 const mosaic = document.getElementById('mosaic');
 allPhotos.forEach((src, i) => {
+  const picture = document.createElement('picture');
+  const webp = document.createElement('source');
+  let webpPath = src.replace(/\.jpe?g$/i, '') + '.webp';
+  webp.srcset = encodeURI(webpPath);
+  webp.type = 'image/webp';
   const img = document.createElement('img');
   img.src = src; img.alt = 'Memória nossa'; img.loading = 'lazy';
   img.style.setProperty('--rand', Math.random());
   img.addEventListener('click', () => openLb(i));
-  mosaic.appendChild(img);
+  picture.appendChild(webp);
+  picture.appendChild(img);
+  mosaic.appendChild(picture);
 });
 
 // rotate moment photos periodically (rodízio)
