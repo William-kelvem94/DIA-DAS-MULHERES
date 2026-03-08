@@ -1,11 +1,9 @@
-const CACHE_VERSION = "v10-20260308-9";
+const CACHE_VERSION = "v9--1772994008";
 const CACHE_NAME = "dia-mulheres-" + CACHE_VERSION;
 const urlsToCache = [
-  "index.html",
-  "./",
-  "css/style.ba33ec11.css",
-  "js/app.f37d0b4b.js",
-  "assets/music/music.mp3",
+  'index.html',
+  './',
+  'assets/music/music.mp3',
 ];
 
 self.addEventListener("install", (event) => {

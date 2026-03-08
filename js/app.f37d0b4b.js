@@ -405,6 +405,22 @@ const mosaicCaptions = [
   "Com você, até as segundas-feiras são boas.",
 ];
 
+// when a thumbnail is tapped/clicked on touch devices it only applies :active
+// briefly, which meant captions popped up for a fraction of a second and
+// then vanished. to make labels usable we add a JS helper that keeps the
+// caption visible for a few seconds on interaction.
+if (mosaic) {
+  mosaic.addEventListener("click", (e) => {
+    const item = e.target.closest(".mosaic-item");
+    if (!item) return;
+    const cap = item.querySelector(".mosaic-caption");
+    if (!cap) return;
+    cap.classList.add("visible");
+    setTimeout(() => cap.classList.remove("visible"), 3000);
+  });
+}
+
+
 galleryPhotos.forEach((src, i) => {
   const item = document.createElement("figure");
   item.className = "mosaic-item";
@@ -512,6 +528,11 @@ function ensureLightboxImage() {
 function renderLightboxPhoto() {
   const img = ensureLightboxImage();
   setBestSource(img, galleryPhotos[lbIndex]);
+  // update caption text using same rotation array as mosaic labels
+  const capEl = document.getElementById("lb-caption");
+  if (capEl) {
+    capEl.textContent = mosaicCaptions[lbIndex % mosaicCaptions.length] || "";
+  }
 }
 
 function openLb(i) {
@@ -686,10 +707,21 @@ document.addEventListener("click", (e) => {
   window.addEventListener("resize", resize);
   window.addEventListener("orientationchange", resize);
 
+  // to avoid jank while scrolling we pause the canvas update during
+  // heavy scroll activity; we'll set a flag further down.
+  let isScrolling = false;
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    isScrolling = true;
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => (isScrolling = false), 150);
+  });
+
   const particles = Array.from(
-    { length: window.innerWidth < 600 ? 12 : 36 },
+    { length: window.innerWidth < 600 ? 8 : 36 }, // fewer on small screens
     () => mkParticle(),
   );
+
   function mkParticle() {
     return {
       x: Math.random() * window.innerWidth,
@@ -736,21 +768,25 @@ document.addEventListener("click", (e) => {
   }
 
   function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p) => {
-      if (p.type === "heart") drawHeart(p.x, p.y, p.size, p.alpha);
-      else drawStar(p.x, p.y, p.size, p.alpha, p.rot);
-      p.y -= p.speed;
-      p.x += p.drift;
-      p.rot += p.rotSpeed;
-      p.alpha -= 0.00025;
-      if (p.y < -40 || p.alpha <= 0) {
-        Object.assign(p, mkParticle());
-        p.y = canvas.height + 20;
-        p.x = Math.random() * canvas.width;
-        p.alpha = Math.random() * 0.3 + 0.06;
-      }
-    });
+    // skip drawing when scroll events are firing fast; keeps scrolling
+    // smooth on slower devices.
+    if (!isScrolling) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        if (p.type === "heart") drawHeart(p.x, p.y, p.size, p.alpha);
+        else drawStar(p.x, p.y, p.size, p.alpha, p.rot);
+        p.y -= p.speed;
+        p.x += p.drift;
+        p.rot += p.rotSpeed;
+        p.alpha -= 0.00025;
+        if (p.y < -40 || p.alpha <= 0) {
+          Object.assign(p, mkParticle());
+          p.y = canvas.height + 20;
+          p.x = Math.random() * canvas.width;
+          p.alpha = Math.random() * 0.3 + 0.06;
+        }
+      });
+    }
     requestAnimationFrame(tick);
   }
   tick();
