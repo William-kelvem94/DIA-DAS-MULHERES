@@ -9,7 +9,7 @@ for root, dirs, files in os.walk(folder):
             out = re.sub(r'\.jpe?g$', '.webp', path, flags=re.I)
             try:
                 img = Image.open(path)
-                img.save(out, 'WEBP', quality=85)
+                img.save(out, 'WEBP', quality=70, optimize=True)
                 print('converted', path)
             except Exception as e:
                 print('failed', path, e)
