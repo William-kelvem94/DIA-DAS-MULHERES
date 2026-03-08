@@ -6,16 +6,16 @@
 // HTML; otherwise the <audio> element will 404. as an alternative the YouTube
 // embed is configured to jump to the chorus (≈44 s) so visitors can play that
 // directly without relying on a local file.
-const ytEmbedUrl = 'https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=1';
-const musicBtn = document.getElementById('music-btn');
-const musicMenu = document.getElementById('music-menu');
+const ytEmbedUrl   = 'https://www.youtube.com/embed/YQ-qToZUybM?start=44&autoplay=1';
+const musicBtn     = document.getElementById('music-btn');
+const musicMenu    = document.getElementById('music-menu');
 const playLocalBtn = document.getElementById('play-local-btn');
-const ytOpenBtn = document.getElementById('yt-open-btn');
-const ytChorusBtn = document.getElementById('yt-chorus-btn'); // new
-const audio = document.getElementById('bg-audio');
-const ytModal = document.getElementById('yt-modal');
-const ytIframe = document.getElementById('yt-iframe');
-const ytClose = document.getElementById('yt-close');
+const ytOpenBtn    = document.getElementById('yt-open-btn');
+const ytChorusBtn  = document.getElementById('yt-chorus-btn'); // new
+const audio        = document.getElementById('bg-audio');
+const ytModal      = document.getElementById('yt-modal');
+const ytIframe     = document.getElementById('yt-iframe');
+const ytClose      = document.getElementById('yt-close');
 
 // Toggle mini-menu
 musicBtn.addEventListener('click', () => { musicMenu.classList.toggle('open'); });
@@ -39,7 +39,7 @@ playLocalBtn.addEventListener('click', () => {
       musicBtn.classList.add('playing');
       musicBtn.textContent = '🎶';
     }).catch(() => {
-      showToast('Nenhuma música encontrada 🎵');
+      showToast('Adicione musica.mp3 na pasta do projeto 🎵');
     });
   } else {
     audio.pause();
@@ -83,27 +83,27 @@ function showToast(msg) {
 }
 
 // easter egg keyboard sequence
-(() => {
-  const seq = ['a', 'm', 'o', 'r']; let idx = 0;
-  document.addEventListener('keydown', e => {
-    if (e.key.toLowerCase() === seq[idx]) {
+(()=>{
+  const seq=['a','m','o','r']; let idx=0;
+  document.addEventListener('keydown',e=>{
+    if(e.key.toLowerCase()===seq[idx]){
       idx++;
-      if (idx === seq.length) {
+      if(idx===seq.length){
         showToast('📝 Segredo: você é minha razão!');
-        idx = 0;
+        idx=0;
       }
-    } else idx = 0;
+    } else idx=0;
   });
 })();
 
 // photo triple click messages
 const momentPhotos = document.querySelectorAll('.moment-photo');
-momentPhotos.forEach(p => {
-  let clicks = 0;
-  p.addEventListener('click', () => {
+momentPhotos.forEach(p=>{
+  let clicks=0;
+  p.addEventListener('click',()=>{
     clicks++;
-    setTimeout(() => { clicks = 0 }, 600);
-    if (clicks === 3) {
+    setTimeout(()=>{clicks=0},600);
+    if(clicks===3){
       showToast('💖 Três vezes e você ganhou meu coração');
     }
   });
@@ -151,30 +151,30 @@ if ('PerformanceObserver' in window) {
       }
     });
   });
-  obs.observe({ type: 'paint', buffered: true });
+  obs.observe({type:'paint', buffered:true});
 }
 
 window.addEventListener('load', () => {
   progressEl.style.transition = 'width 1.2s ease,inset 0.3s';
   progressEl.style.background = 'var(--gold)';
   progressEl.style.width = '100%';
-  setTimeout(() => { progressEl.style.width = '0%'; }, 1200);
+  setTimeout(()=>{progressEl.style.width='0%';}, 1200);
 });
 
 // theme picker cycle
 const themeBtn = document.getElementById('theme-toggle');
-const themes = ['', 'rose', 'paper'];
+const themes = ['','rose','paper'];
 if (themeBtn) {
-  let idx = themes.indexOf(localStorage.theme) >= 0 ? themes.indexOf(localStorage.theme) : 0;
+  let idx = themes.indexOf(localStorage.theme) >=0 ? themes.indexOf(localStorage.theme) : 0;
   function apply(t) {
-    if (t) document.documentElement.setAttribute('data-theme', t);
+    if (t) document.documentElement.setAttribute('data-theme',t);
     else document.documentElement.removeAttribute('data-theme');
     localStorage.theme = t;
-    themeBtn.textContent = t === 'rose' ? '🌹' : t === 'paper' ? '📜' : '🌙';
+    themeBtn.textContent = t==='rose'? '🌹': t==='paper'?'📜':'🌙';
   }
   apply(themes[idx]);
   themeBtn.addEventListener('click', () => {
-    idx = (idx + 1) % themes.length;
+    idx = (idx+1) % themes.length;
     apply(themes[idx]);
   });
 }
@@ -182,12 +182,12 @@ if (themeBtn) {
 window.addEventListener('scroll', () => {
   // hero shrink
   const hero = document.querySelector('.hero');
-  if (window.scrollY > 120) hero.classList.add('shrink'); else hero.classList.remove('shrink');
+  if(window.scrollY > 120) hero.classList.add('shrink'); else hero.classList.remove('shrink');
   // ripple effect on scroll hint
   const hint = document.querySelector('.scroll-hint');
-  if (window.scrollY > 80 && hint) {
+  if(window.scrollY > 80 && hint){
     hint.classList.add('ripple');
-    setTimeout(() => hint.classList.remove('ripple'), 600);
+    setTimeout(()=>hint.classList.remove('ripple'),600);
   }
   if (!tick) {
     window.requestAnimationFrame(() => {
@@ -200,51 +200,50 @@ window.addEventListener('scroll', () => {
 });
 
 /* ── Timeline horizontal ───────────── */
-(function () {
+(function(){
   const tl = document.getElementById('timeline');
   if (!tl) return;
   const moments = document.querySelectorAll('.moment');
-  const treasure = Math.floor(Math.random() * moments.length);
-  moments.forEach((m, i) => {
+  const treasure = Math.floor(Math.random()*moments.length);
+  moments.forEach((m,i)=>{
     const pic = m.querySelector('.moment-photo');
     const badge = m.querySelector('.photo-badge')?.textContent || '';
     const item = document.createElement('div');
-    item.className = 'tl-item';
+    item.className='tl-item';
     const img = document.createElement('img');
     img.src = pic ? pic.src : '';
     img.alt = badge;
     item.appendChild(img);
     const lbl = document.createElement('div');
-    lbl.className = 'tl-label';
+    lbl.className='tl-label';
     lbl.textContent = badge;
     item.appendChild(lbl);
-    item.addEventListener('click', () => {
+    item.addEventListener('click',()=>{
       // scroll to corresponding moment
-      m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      m.scrollIntoView({behavior:'smooth', block:'center'});
       const img = m.querySelector('.moment-photo');
-      if (img) {
-        img.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }], { duration: 400, iterations: 2, direction: 'alternate' });
+      if(img){
+        img.animate([{transform:'scale(1)'},{transform:'scale(1.12)'}],{duration:400,iterations:2, direction:'alternate'});
       }
-      if (i === treasure) {
+      if(i===treasure){
         showToast('🏆 Você encontrou o tesouro!');
         item.classList.add('found');
-        for (let k = 0; k < 12; k++) { const sp = document.createElement('span'); sp.className = 'sparkle'; sp.textContent = '✨'; document.body.appendChild(sp); setTimeout(() => sp.remove(), 800); }
+        for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}
       }
-      if (i === treasure) {
+      if(i===treasure){
         showToast('🏆 Você encontrou o tesouro!');
         // small confetti effect
-        for (let k = 0; k < 12; k++) { const sp = document.createElement('span'); sp.className = 'sparkle'; sp.textContent = '✨'; document.body.appendChild(sp); setTimeout(() => sp.remove(), 800); }
-      }
+        for(let k=0;k<12;k++){const sp=document.createElement('span');sp.className='sparkle';sp.textContent='✨';document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);}      }
     });
     tl.appendChild(item);
   });
   // keyboard navigation
-  tl.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') tl.scrollBy({ left: 240, behavior: 'smooth' });
-    if (e.key === 'ArrowLeft') tl.scrollBy({ left: -240, behavior: 'smooth' });
+  tl.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight') tl.scrollBy({left:240,behavior:'smooth'});
+    if(e.key==='ArrowLeft') tl.scrollBy({left:-240,behavior:'smooth'});
   });
-  tl.addEventListener('focus', () => { document.body.style.overflow = 'hidden'; });
-  tl.addEventListener('blur', () => { document.body.style.overflow = ''; });
+  tl.addEventListener('focus', ()=>{ document.body.style.overflow='hidden'; });
+  tl.addEventListener('blur', ()=>{ document.body.style.overflow=''; });
 })();
 
 /* ── Galeria mosaico ─────────────── */
@@ -300,10 +299,10 @@ allPhotos.forEach((src, i) => {
 // rotate moment photos periodically (rodízio)
 const momentPics = Array.from(document.querySelectorAll('.moment-photo'));
 function cycleMoments() {
-  if (momentPics.length === 0) return;
-  const lastSrc = momentPics[momentPics.length - 1].src;
-  for (let i = momentPics.length - 1; i > 0; i--) {
-    momentPics[i].src = momentPics[i - 1].src;
+  if(momentPics.length===0) return;
+  const lastSrc = momentPics[momentPics.length-1].src;
+  for(let i=momentPics.length-1;i>0;i--){
+    momentPics[i].src = momentPics[i-1].src;
   }
   momentPics[0].src = lastSrc;
 }
@@ -318,12 +317,12 @@ function openLb(i) {
   if (carousel.children.length === 0) {
     const count = allPhotos.length;
     const angle = 360 / count;
-    allPhotos.forEach((src, j) => {
+    allPhotos.forEach((src,j)=>{
       const slide = document.createElement('div');
-      slide.className = 'slide';
-      slide.style.transform = `rotateY(${j * angle}deg) translateZ(600px)`;
+      slide.className='slide';
+      slide.style.transform = `rotateY(${j*angle}deg) translateZ(600px)`;
       const img = document.createElement('img');
-      img.src = encodeURI(src.replace(/\.jpe?g$/i, '.webp'));
+      img.src = encodeURI(src.replace(/\.jpe?g$/i,'.webp'));
       img.alt = 'Memória';
       slide.appendChild(img);
       carousel.appendChild(slide);
@@ -331,14 +330,14 @@ function openLb(i) {
   }
   // rotate to index
   const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-i * angle}deg)`;
-  lightboxEl.setAttribute('aria-hidden', 'false');
+  carousel.style.transform = `translateZ(-600px) rotateY(${-i*angle}deg)`;
+  lightboxEl.setAttribute('aria-hidden','false');
   lightboxEl.classList.add('open');
   lightboxEl.focus();
 }
 document.getElementById('lb-close').addEventListener('click', () => {
   const lb = document.getElementById('lightbox');
-  lb.setAttribute('aria-hidden', 'true');
+  lb.setAttribute('aria-hidden','true');
   lb.classList.remove('open');
 });
 document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
@@ -346,13 +345,13 @@ document.getElementById('lb-prev').addEventListener('click', () => {
   lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length;
   const carousel = document.getElementById('carousel');
   const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex * angle}deg)`;
+  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
 });
 document.getElementById('lb-next').addEventListener('click', () => {
   lbIndex = (lbIndex + 1) % allPhotos.length;
   const carousel = document.getElementById('carousel');
   const angle = 360 / allPhotos.length;
-  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex * angle}deg)`;
+  carousel.style.transform = `translateZ(-600px) rotateY(${-lbIndex*angle}deg)`;
 });
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
@@ -361,21 +360,10 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
 
-// Parallax effect on hero
-document.addEventListener('mousemove', (e) => {
-  if (window.innerWidth < 1000) return;
-  const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-  const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-  const heroContent = document.querySelector('.hero-content');
-  if (heroContent) {
-    heroContent.style.transform = `translate(${moveX}px, ${moveY}px)`;
-  }
-});
-
 // Swipe support for mobile on carousel
 let startX = 0;
 const carouselElement = document.getElementById('carousel');
-if (carouselElement) {
+if(carouselElement){
   carouselElement.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
   carouselElement.addEventListener('touchend', e => {
     const endX = e.changedTouches[0].clientX;
@@ -388,27 +376,16 @@ if (carouselElement) {
 }
 
 /* ── Scroll reveal ───────────────── */
-// audio context for short tones (lazy initialize to avoid autoplay policy errors)
-let audioCtx;
-function getAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  return audioCtx;
-}
-function tone(freq, dur) {
-  const ctx = getAudioCtx();
-  if (ctx.state === 'suspended') {
-    // Only try to resume if it was already created, but we'll try to get it first
-    ctx.resume();
-  }
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.frequency.value = freq;
-  osc.connect(gain); gain.connect(ctx.destination);
-  osc.start(); gain.gain.setValueAtTime(0.15, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-  osc.stop(ctx.currentTime + dur);
+// audio context for short tones
+const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+function tone(freq,dur){
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.frequency.value=freq;
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.start();gain.gain.setValueAtTime(0.15,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+  osc.stop(audioCtx.currentTime+dur);
 }
 
 const revealObs = new IntersectionObserver(entries => {
@@ -416,9 +393,9 @@ const revealObs = new IntersectionObserver(entries => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
       if (e.target.classList.contains('moment')) {
-        const idx = parseInt(e.target.dataset.index || 0, 10);
+        const idx = parseInt(e.target.dataset.index||0,10);
         const freq = 350 + idx * 40;
-        tone(freq, 0.3);
+        tone(freq,0.3);
       }
       revealObs.unobserve(e.target);
     }
@@ -429,10 +406,9 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 /* ── Typewriter ──────────────────── */
 const phrases = [
   "Minha parceira de vida e de código 💻",
-  "Em um mundo de bugs, você é minha melhor feature 🌟",
-  "Você é o commit mais importante da minha vida ❤️",
-  "Feliz Dia das Mulheres, meu amor 🌸",
-  "Com você, todo sistema funciona em harmonia 💫",
+  "Feliz Dia das Mulheres, meu amor ❤️",
+  "Obrigado por cuidar tanto de mim 🌸",
+  "Com você, todo bug tem solução 💫",
 ];
 let pi = 0, ci = 0, deleting = false;
 function type() {
@@ -455,16 +431,16 @@ document.addEventListener('click', e => {
   for (let i = 0; i < 7; i++) {
     const sp = document.createElement('span');
     sp.className = 'sparkle';
-    sp.textContent = ['✨', '💫', '🌟', '💥', '💎'][Math.floor(Math.random() * 5)];
+    sp.textContent = ['✨','💫','🌟','💥','💎'][Math.floor(Math.random() * 5)];
     const size = Math.random() * 18 + 14;
-    sp.style.cssText = `left:${e.clientX + (Math.random() - 0.5) * 60}px;top:${e.clientY + window.scrollY + (Math.random() - 0.5) * 60}px;font-size:${size}px`;
+    sp.style.cssText = `left:${e.clientX + (Math.random()-0.5)*60}px;top:${e.clientY + window.scrollY + (Math.random()-0.5)*60}px;font-size:${size}px`;
     document.body.appendChild(sp);
     setTimeout(() => sp.remove(), 750);
   }
 });
 
 /* ── Corações + estrelas flutuantes ─ */
-(function () {
+(function() {
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -475,14 +451,14 @@ document.addEventListener('click', e => {
   const particles = Array.from({ length: window.innerWidth < 600 ? 12 : 36 }, () => mkParticle());
   function mkParticle() {
     return {
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight + window.innerHeight,
-      type: Math.random() > 0.5 ? 'heart' : 'star',
-      size: Math.random() * 12 + 6,
+      x:     Math.random() * window.innerWidth,
+      y:     Math.random() * window.innerHeight + window.innerHeight,
+      type:  Math.random() > 0.5 ? 'heart' : 'star',
+      size:  Math.random() * 12 + 6,
       speed: Math.random() * 0.6 + 0.15,
       alpha: Math.random() * 0.3 + 0.06,
       drift: (Math.random() - 0.5) * 0.45,
-      rot: Math.random() * Math.PI * 2,
+      rot:   Math.random() * Math.PI * 2,
       rotSpeed: (Math.random() - 0.5) * 0.02
     };
   }
@@ -491,10 +467,10 @@ document.addEventListener('click', e => {
     ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#f06292';
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.bezierCurveTo(x, y - s / 2, x - s, y - s / 2, x - s, y);
-    ctx.bezierCurveTo(x - s, y + s * 0.6, x, y + s * 1.1, x, y + s * 1.3);
-    ctx.bezierCurveTo(x, y + s * 1.1, x + s, y + s * 0.6, x + s, y);
-    ctx.bezierCurveTo(x + s, y - s / 2, x, y - s / 2, x, y);
+    ctx.bezierCurveTo(x, y - s/2, x - s, y - s/2, x - s, y);
+    ctx.bezierCurveTo(x - s, y + s*0.6, x, y + s*1.1, x, y + s*1.3);
+    ctx.bezierCurveTo(x, y + s*1.1, x + s, y + s*0.6, x + s, y);
+    ctx.bezierCurveTo(x + s, y - s/2, x, y - s/2, x, y);
     ctx.fill(); ctx.restore();
   }
 

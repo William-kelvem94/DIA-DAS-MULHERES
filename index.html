@@ -1,251 +1,303 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="theme-color" content="#c2185b"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="theme-color" content="#c2185b" />
   <title>💖 Para o meu Mozinho — Feliz Dia das Mulheres!</title>
   <!-- botão abrir vídeo do refrão (YouTube) -->
   <!-- o refrão começa aproximadamente em 0:44s -->
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script>
     // cache‑buster: append timestamp query to versionable resources
     const ver = Date.now();
     function tag(type, attr) {
-      document.querySelectorAll(type + '[data-versionable]').forEach(el=>{
+      document.querySelectorAll(type + '[data-versionable]').forEach(el => {
         el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + ver;
       });
     }
     window.addEventListener('DOMContentLoaded', () => {
-      tag('link','href');
-      tag('script','src');
+      tag('link', 'href');
+      tag('script', 'src');
     });
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" data-versionable/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>"/>
-  <link rel="preload" href="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg" as="image" data-versionable/>
-  <link rel="stylesheet" href="style.css" data-versionable>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet" data-versionable />
+  <!-- Removing problematic preloads that are causing warnings and not being used correctly -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.ba33ec11.css" data-versionable>
   <meta name="description" content="Uma homenagem interativa para Maria Gabriele no Dia das Mulheres.">
   <meta property="og:title" content="💖 Para o meu Mozinho — Feliz Dia das Mulheres!">
   <meta property="og:description" content="Uma página cheia de amor com fotos e mensagens especiais.">
   <meta property="og:image" content="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.02.jpeg">
+  <style>
+    /* Premium overscroll behavior */
+    body {
+      overscroll-behavior: none;
+    }
+
+    /* Smoother custom scrollbar for the entire page */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #07071a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--violet), var(--rose));
+      border-radius: 10px;
+      border: 2px solid #07071a;
+    }
+  </style>
 </head>
+
 <body>
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+  <div id="progress"></div>
 
-<div id="progress"></div>
-<canvas id="bg-canvas"></canvas>
-<div id="music-fab">
-  <div id="music-menu">
-    <button class="music-opt" id="yt-open-btn">🎬 Ver clipe no YouTube</button>
-    <button class="music-opt" id="yt-chorus-btn">🎧 Ouvir refrão (YouTube)</button>
-    <button class="music-opt" id="play-local-btn">🎵 Tocar música</button>
-  </div>
-  <button id="music-btn" aria-label="Abrir player de música">🎵</button>
-</div>
-<audio id="bg-audio" src="The Weeknd_ Ariana Grande - Die For You (Remix _ Lyric Video)(MP3_320K)_1.mp3" preload="none"></audio>
-
-<!-- ══ HERO ══════════════════════════════════════════════════ -->
-<section class="hero" role="banner">
-  <p class="hero-date">08 de Março de 2026 • Dia Internacional da Mulher</p>
-  <h1>Para a Maria Gabriele, minha mulher favorita no mundo inteiro</h1>
-  <p class="hero-sub">
-    Não precisa ser um dia específico pra eu saber a sorte que tenho, mas hoje o mundo
-    para pra celebrar mulheres fortes. E eu não podia deixar de homenagear a mulher
-    mais incrível que divide a vida comigo.
-  </p>
-  <div class="typewriter" id="typewriter"></div>
-  <div class="scroll-hint">
-    <span>Role para baixo, tem surpresas 🎀</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
-  </div>
-</section>
-
-<!-- ══ CONTEÚDO ════════════════════════════════════════════ -->
-<div class="wrap" role="main">
-
-  <!-- Momento 1 -->
-  <div class="moment" data-reveal>
-    <div class="photo-frame">
-      <span class="photo-badge">✨ Minha inspiração</span>
-      <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg" alt="Nós sorrindo juntos"/>
+  <canvas id="bg-canvas"></canvas>
+  <div id="music-fab">
+    <div id="music-menu">
+      <button class="music-opt" id="yt-open-btn">🎬 Ver clipe no YouTube</button>
+      <button class="music-opt" id="yt-chorus-btn">🎧 Ouvir refrão (YouTube)</button>
+      <button class="music-opt" id="play-local-btn">🎵 Tocar música</button>
+      <div id="theme-toggle" aria-label="Mudar esquema de cores" class="music-opt">🎨 Alterar Tema</div>
     </div>
-    <div class="moment-card">
-      <p class="moment-text">
-        "Eu vejo de perto a sua garra. Mesmo quando o ambiente de trabalho é caótico,
-        ou quando as pessoas tentam te diminuir, você levanta a cabeça e faz o seu melhor.
-        Ver você brilhar e buscar o seu espaço com tanta resiliência me enche de orgulho."
+    <button id="music-btn" aria-label="Abrir player de música">🎵</button>
+  </div>
+  <audio id="bg-audio" src="assets/music/music.mp3" preload="none"></audio>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════ -->
+  <section class="hero" role="banner">
+    <div class="hero-content">
+      <p class="hero-date">08 de Março de 2026 • Dia Internacional da Mulher</p>
+      <h1>Para a Maria Gabriele, minha mulher favorita no mundo inteiro</h1>
+      <p class="hero-sub">
+        Não precisa ser um dia específico pra eu saber a sorte que tenho, mas hoje o mundo
+        para pra celebrar mulheres fortes. E eu não podia deixar de homenagear a mulher
+        mais incrível que divide a vida comigo.
       </p>
-      <p class="moment-author">— com muita admiração 💕</p>
+      <div class="typewriter" id="typewriter"></div>
+      <div class="scroll-hint">
+        <span>Role para baixo, tem surpresas 🎀</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="ribbon">✦ ✦ ✦</div>
+  <!-- ══ TIMELINE HORIZONTAL ══════════════════════════════════ -->
+  <section class="timeline-section" aria-label="Linha do tempo">
+    <div class="timeline" tabindex="0" id="timeline"></div>
+  </section>
 
-  <!-- Momento 2 -->
-  <div class="moment moment--flip" data-reveal>
-    <div class="photo-frame">
-      <span class="photo-badge">💜 Lado a lado</span>
-      <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg" alt="Abraço nosso"/>
+  <!-- ══ CONTEÚDO ════════════════════════════════════════════ -->
+  <div class="wrap" role="main" id="main">
+
+    <!-- Momento 1 -->
+    <div class="moment" data-reveal>
+      <div class="photo-frame">
+        <span class="photo-badge">✨ Minha inspiração</span>
+        <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.03 (1).jpeg"
+          alt="Nós sorrindo juntos" />
+      </div>
+      <div class="moment-card">
+        <p class="moment-text">
+          "Eu vejo de perto a sua garra. Mesmo quando o ambiente de trabalho é caótico,
+          ou quando as pessoas tentam te diminuir, você levanta a cabeça e faz o seu melhor.
+          Ver você brilhar e buscar o seu espaço com tanta resiliência me enche de orgulho."
+        </p>
+        <p class="moment-author">— com muita admiração 💕</p>
+      </div>
     </div>
-    <div class="moment-card">
-      <p class="moment-text">
-        "Você não é só minha namorada, é minha maior parceira. Eu vejo e valorizo o quanto
-        você se importa com o meu futuro, como tenta me ajudar com conexões e torce pelo meu
-        crescimento profissional. Ter alguém que joga no meu time assim não tem preço."
-      </p>
-      <p class="moment-author">— grato por ter você 🌟</p>
-    </div>
-  </div>
 
-  <!-- Banner 1 -->
-  <div class="banner" data-reveal>
-    <div class="banner-bg"></div>
-    <div class="banner-content">
+    <div class="ribbon">✦ ✦ ✦</div>
+
+    <!-- Momento 2 -->
+    <div class="moment moment--flip" data-reveal>
+      <div class="photo-frame">
+        <span class="photo-badge">💜 Lado a lado</span>
+        <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.04 (1).jpeg"
+          alt="Abraço nosso" />
+      </div>
+      <div class="moment-card">
+        <p class="moment-text">
+          "Você não é só minha namorada, é minha maior parceira. Eu vejo e valorizo o quanto
+          você se importa com o meu futuro, como tenta me ajudar com conexões e torce pelo meu
+          crescimento profissional. Ter alguém que joga no meu time assim não tem preço."
+        </p>
+        <p class="moment-author">— grato por ter você 🌟</p>
+      </div>
+    </div>
+
+    <!-- Banner 1 -->
+    <div class="banner" data-reveal>
+      <div class="banner-bg"></div>
+      <div class="banner-content">
+        <p>
+          "Eu sei que a gente tem nossos altos e baixos, nossos dias difíceis,
+          mas a sua disposição em descer a guarda, pedir desculpas e tentar de novo
+          me mostra o tamanho do seu coração e a mulher gigante que você é."
+        </p>
+        <span>— 8 de Março de 2026 💜</span>
+      </div>
+    </div>
+
+    <!-- Momento 3 -->
+    <div class="moment" data-reveal>
+      <div class="photo-frame">
+        <span class="photo-badge">💻 Meu melhor projeto</span>
+        <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg"
+          alt="Nós de mãos dadas" />
+      </div>
+      <div class="moment-card">
+        <p class="moment-text">
+          "Eu passo o dia lidando com sistemas, Docker, VS Code e lógicas complexas,
+          mas a arquitetura mais bonita que eu já vi rodar é a nossa. A gente pode até
+          entrar em uns 'loops' de desentendimento de vez em quando, mas sempre damos um
+          jeito de compilar uma versão melhor de nós dois."
+        </p>
+        <p class="moment-author">— seu dev favorito </p>
+      </div>
+    </div>
+
+    <div class="ribbon">✦ ✦ ✦</div>
+
+    <!-- Momento 4 -->
+    <div class="moment moment--flip" data-reveal>
+      <div class="photo-frame">
+        <span class="photo-badge">🌙 Meu porto seguro</span>
+        <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg"
+          alt="Abraço acolhedor" />
+      </div>
+      <div class="moment-card">
+        <p class="moment-text">
+          "Sabe aquela sensação de chegar em casa cansado da rotina CLT, cheio de estresse
+          na cabeça, e de repente tudo acalmar? É isso que o seu abraço faz comigo.
+          Você tem o dom de me acolher nas minhas inseguranças e me trazer paz."
+        </p>
+        <p class="moment-author">— sempre seu 💜</p>
+      </div>
+    </div>
+
+    <div class="ribbon">✦ ✦ ✦</div>
+
+    <!-- Momento 5 -->
+    <div class="moment" data-reveal>
+      <div class="photo-frame">
+        <span class="photo-badge">🌟 Todo meu respeito</span>
+        <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg"
+          alt="Nós felizes" />
+      </div>
+      <div class="moment-card">
+        <p class="moment-text">
+          "Que orgulho eu tenho de você, da mulher que você é, da força que você carrega,
+          da forma como enfrenta cada desafio com a cabeça erguida.
+          Você inspira as pessoas ao redor só de existir, e talvez você nem perceba isso.
+          Mas eu percebo. Sempre."
+        </p>
+        <p class="moment-author">— seu maior torcedor 💪</p>
+      </div>
+    </div>
+
+    <!-- Banner 2 -->
+    <div class="banner" data-reveal>
+      <div class="banner-bg"></div>
+      <div class="banner-content">
+        <p>
+          "Que hoje e sempre você tenha certeza do seu valor. Que nunca duvide da sua
+          inteligência, da sua capacidade e da luz que você traz pra vida de quem tá ao
+          seu redor. Você é incrível demais, meu mozinho."
+        </p>
+        <span>— seu maior fã 💍</span>
+      </div>
+    </div>
+
+    <!-- ══ GALERIA ════════════════════════════════════════════ -->
+    <div class="gallery-section" data-reveal>
+      <h2 class="section-title">Nossa história, quadro a quadro</h2>
+      <p class="section-sub">Cada foto é um momento que eu não trocaria por nada. Clique para ampliar 📷</p>
+      <div class="mosaic" id="mosaic"></div>
+    </div>
+
+    <!-- ══ CARTA ══════════════════════════════════════════════ -->
+    <div class="letter" data-reveal>
+      <p class="letter-header">Uma cartinha só pra você,</p>
       <p>
-        "Eu sei que a gente tem nossos altos e baixos, nossos dias difíceis,
-        mas a sua disposição em descer a guarda, pedir desculpas e tentar de novo
-        me mostra o tamanho do seu coração e a mulher gigante que você é."
+        Hoje eu queria escrever algo que fizesse jus a tudo que você representa pra mim,
+        mas a verdade é que não existe palavra grande o suficiente.
+        Então vou ser simples: você me faz bem. Do jeito mais honesto e real possível.
       </p>
-      <span>— 8 de Março de 2026 💜</span>
-    </div>
-  </div>
-
-  <!-- Momento 3 -->
-  <div class="moment" data-reveal>
-    <div class="photo-frame">
-      <span class="photo-badge">💻 Meu melhor projeto</span>
-      <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.05 (1).jpeg" alt="Nós de mãos dadas"/>
-    </div>
-    <div class="moment-card">
-      <p class="moment-text">
-        "Eu passo o dia lidando com sistemas, Docker, VS Code e lógicas complexas,
-        mas a arquitetura mais bonita que eu já vi rodar é a nossa. A gente pode até
-        entrar em uns 'loops' de desentendimento de vez em quando, mas sempre damos um
-        jeito de compilar uma versão melhor de nós dois."
-      </p>
-      <p class="moment-author">— seu dev favorito </p>
-    </div>
-  </div>
-
-  <div class="ribbon">✦ ✦ ✦</div>
-
-  <!-- Momento 4 -->
-  <div class="moment moment--flip" data-reveal>
-    <div class="photo-frame">
-      <span class="photo-badge">🌙 Meu porto seguro</span>
-      <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.06 (1).jpeg" alt="Abraço acolhedor"/>
-    </div>
-    <div class="moment-card">
-      <p class="moment-text">
-        "Sabe aquela sensação de chegar em casa cansado da rotina CLT, cheio de estresse
-        na cabeça, e de repente tudo acalmar? É isso que o seu abraço faz comigo.
-        Você tem o dom de me acolher nas minhas inseguranças e me trazer paz."
-      </p>
-      <p class="moment-author">— sempre seu 💜</p>
-    </div>
-  </div>
-
-  <div class="ribbon">✦ ✦ ✦</div>
-
-  <!-- Momento 5 -->
-  <div class="moment" data-reveal>
-    <div class="photo-frame">
-      <span class="photo-badge">🌟 Todo meu respeito</span>
-      <img class="moment-photo" loading="lazy" src="FOTOS MOZINHO/WhatsApp Image 2026-03-07 at 11.36.07 (1).jpeg" alt="Nós felizes"/>
-    </div>
-    <div class="moment-card">
-      <p class="moment-text">
-        "Que orgulho eu tenho de você, da mulher que você é, da força que você carrega,
-        da forma como enfrenta cada desafio com a cabeça erguida.
-        Você inspira as pessoas ao redor só de existir, e talvez você nem perceba isso.
-        Mas eu percebo. Sempre."
-      </p>
-      <p class="moment-author">— seu maior torcedor 💪</p>
-    </div>
-  </div>
-
-  <!-- Banner 2 -->
-  <div class="banner" data-reveal>
-    <div class="banner-bg"></div>
-    <div class="banner-content">
       <p>
-        "Que hoje e sempre você tenha certeza do seu valor. Que nunca duvide da sua
-        inteligência, da sua capacidade e da luz que você traz pra vida de quem tá ao
-        seu redor. Você é incrível demais, meu mozinho."
+        Quando eu penso no futuro, você está em todos os frames porque com você,
+        tudo faz mais sentido. Os planos ficam mais empolgantes,
+        os problemas ficam menores, e aquelas coisas simples do dia a dia
+        viram as memórias que eu mais vou querer guardar.
       </p>
-      <span>— seu maior fã 💍</span>
+      <p>
+        Então, no dia em que o mundo celebra as mulheres,
+        eu só quero que você saiba: o meu mundo
+        ficou infinitamente melhor quando você entrou nele.
+        Feliz Dia das Mulheres, mozinho.
+        Hoje e sempre.
+      </p>
+      <p class="letter-sign">Com todo o meu amor, seu mozão 💖</p>
+    </div>
+
+    <!-- ══ QR CODE ════════════════════════════════════════════ -->
+    <div class="qr-section" data-reveal>
+      <p class="qr-title">Guarda esse momento</p>
+      <p class="qr-sub">Escaneie e salve, pra ler sempre que quiser sentir que é amada 💕</p>
+      <div id="qrcode" aria-label="QR code para abrir esta página"></div>
+    </div>
+
+  </div><!-- /wrap -->
+
+  <!-- YouTube Modal -->
+  <div id="yt-modal" role="dialog" aria-label="Player do YouTube">
+    <div class="yt-box">
+      <button class="yt-close" id="yt-close">&times;</button>
+      <iframe id="yt-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen
+        title="Die For You - The Weeknd"></iframe>
     </div>
   </div>
 
-  <!-- ══ GALERIA ════════════════════════════════════════════ -->
-  <div class="gallery-section" data-reveal>
-    <h2 class="section-title">Nossa história, quadro a quadro</h2>
-    <p class="section-sub">Cada foto é um momento que eu não trocaria por nada. Clique para ampliar 📷</p>
-    <div class="mosaic" id="mosaic"></div>
+
+  <!-- Lightbox 3D carousel -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lb-close" id="lb-close" aria-label="Fechar">&times;</button>
+    <button class="lb-prev" id="lb-prev" aria-label="Foto anterior">&#8249;</button>
+    <div class="carousel" id="carousel"></div>
+    <button class="lb-next" id="lb-next" aria-label="Próxima foto">&#8250;</button>
   </div>
 
-  <!-- ══ CARTA ══════════════════════════════════════════════ -->
-  <div class="letter" data-reveal>
-    <p class="letter-header">Uma cartinha só pra você,</p>
-    <p>
-      Hoje eu queria escrever algo que fizesse jus a tudo que você representa pra mim,
-      mas a verdade é que não existe palavra grande o suficiente.
-      Então vou ser simples: você me faz bem. Do jeito mais honesto e real possível.
-    </p>
-    <p>
-      Quando eu penso no futuro, você está em todos os frames porque com você,
-      tudo faz mais sentido. Os planos ficam mais empolgantes,
-      os problemas ficam menores, e aquelas coisas simples do dia a dia
-      viram as memórias que eu mais vou querer guardar.
-    </p>
-    <p>
-      Então, no dia em que o mundo celebra as mulheres,
-      eu só quero que você saiba: o meu mundo
-      ficou infinitamente melhor quando você entrou nele.
-      Feliz Dia das Mulheres, mozinho. 
-      Hoje e sempre.
-    </p>
-    <p class="letter-sign">Com todo o meu amor, seu mozão 💖</p>
-  </div>
+  <footer>
+    <span class="footer-hearts">❤️ 💗 ❤️</span>
+    Feito com <strong>muito amor</strong>, especialmente pra você.
+  </footer>
 
-  <!-- ══ QR CODE ════════════════════════════════════════════ -->
-  <div class="qr-section" data-reveal>
-    <p class="qr-title">Guarda esse momento</p>
-    <p class="qr-sub">Escaneie e salve, pra ler sempre que quiser sentir que é amada 💕</p>
-    <div id="qrcode" aria-label="QR code para abrir esta página"></div>
-  </div>
-
-</div><!-- /wrap -->
-
-<!-- YouTube Modal -->
-<div id="yt-modal" role="dialog" aria-label="Player do YouTube">
-  <div class="yt-box">
-    <button class="yt-close" id="yt-close">&times;</button>
-    <iframe id="yt-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen title="Die For You - The Weeknd"></iframe>
-  </div>
-</div>
-
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="lb-close" id="lb-close">&times;</button>
-  <button class="lb-prev" id="lb-prev">&#8249;</button>
-  <img id="lb-img" src="" alt=""/>
-  <button class="lb-next" id="lb-next">&#8250;</button>
-</div>
-
-<footer>
-  <span class="footer-hearts">❤️ 💗 ❤️</span>
-  Feito com <strong>muito amor</strong>, especialmente pra você.
-</footer>
-
-<!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<div id="toast">Link copiado!</div>
-<script src="app.js" defer data-versionable></script>
+  <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <div id="toast">Link copiado!</div>
+  <script>
+    // service worker registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('scripts/sw.js').catch(console.error);
+      });
+    }
+  </script>
+  <script src="js/app.f37d0b4b.js" defer data-versionable></script>
 </body>
+
 </html>
-
-

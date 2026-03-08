@@ -29,11 +29,20 @@
 
 ```
 DIA DAS MULHERES/
+├── css/               ← estilos compilados e versionados
+│   └── style.<hash>.css
+├── js/                ← scripts compilados e versionados
+│   └── app.<hash>.js
+├── scripts/           ← ferramentas de build e utilitários
+│   ├── build.py       ← atualiza hashes e service worker
+│   ├── convert_images.py
+│   └── make_icons.py
 ├── index.html          ← página única completa
-├── FOTOS MOZINHO/      ← pasta com todas as fotos do casal
-│   ├── WhatsApp Image 2026-03-07 at 11.36.02.jpeg
-│   └── ... (34 fotos no total)
-└── README.md
+├── manifest.json       ← PWA
+├── README.md
+└── FOTOS MOZINHO/      ← pasta com todas as fotos do casal
+    ├── WhatsApp Image 2026-03-07 at 11.36.02.jpeg
+    └── ... (34 fotos no total)
 ```
 
 ---
@@ -62,7 +71,10 @@ Edite as seções `.moment-card` dentro do `index.html` — cada bloco tem uma t
 
 ### Adicionar/remover fotos
 - Para as fotos de **destaque** (momentos), troque o `src` das `<img class="moment-photo">`.
-- Para a **galeria mosaico**, edite o array `allPhotos` no bloco `<script>` no final do arquivo.
+- Para a **galeria mosaico**, edite o array `allPhotos` no bloco `<script>` em `js/app.<hash>.js` ou diretamente no `index.html` antes de rodar o `build.py`.
+
+### Regenerar assets
+Sempre que alterar `css/style.css` ou `js/app.js`, execute `python scripts/build.py` para criar os arquivos com hash e atualizar o `index.html` e o service worker.
 
 ---
 
