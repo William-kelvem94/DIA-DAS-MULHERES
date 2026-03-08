@@ -101,14 +101,32 @@
 
     /* MOMENTO (foto + frase) */
     .moment{
-      padding:56px 0;display:flex;flex-direction:column;
-      align-items:center;gap:28px;
-      opacity:0;transform:translateY(44px);
-      transition:opacity 0.8s ease,transform 0.8s ease
-    }
-    .moment.visible{opacity:1;transform:translateY(0)}
-
-    .photo-frame{
+  padding:56px 0;display:flex;flex-wrap:wrap;justify-content:center;
+  align-items:center;gap:28px;
+  opacity:0;transform:translateY(44px);
+  transition:opacity 0.8s ease,transform 0.8s ease
+}
+.moment.visible{opacity:1;transform:translateY(0)}
+/* alternate sides for desktop */
+@media(min-width:700px){
+  .moment:nth-child(even){flex-direction:row-reverse;}
+  .moment:nth-child(odd){flex-direction:row;}
+}
+.moment-photo{
+  position:relative;z-index:1;
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  border-radius:24px;
+  border:4px solid var(--white);
+  box-shadow:0 20px 60px rgba(240,98,146,0.32);
+  transition:transform 0.45s ease,box-shadow 0.45s ease;
+  cursor:pointer;display:block;
+  animation:tilt 6s infinite alternate ease-in-out;
+}
+@keyframes tilt{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.moment-photo:hover{
+  transform:rotate(0) scale(1.05);
+  box-shadow:0 28px 72px rgba(240,98,146,0.42)
+}
       position:relative;width:100%;max-width:480px
     }
     .photo-frame::before{
@@ -212,14 +230,14 @@
     }
     .section-sub{text-align:center;font-size:0.88rem;color:#ccc;margin-bottom:30px}
     .mosaic{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-      gap:10px;
-      margin-bottom:20px;
+      display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+      padding:12px 0; margin-bottom:20px;
     }
-
+    .mosaic img{border:2px solid var(--white);transform:rotate(calc(-3deg + 6deg * var(--rand)));
+      transition:transform 0.5s ease,filter 0.5s ease;}
+    .mosaic img:hover{transform:scale(1.08) rotate(0deg);filter:brightness(1.2);}
     @media (max-width:600px){
-      .mosaic{grid-template-columns:1fr;}
+      .mosaic{flex-direction:column;}
       .hero h1{font-size:2.2rem;}
       .hero-sub{font-size:1rem;}
       .section-title{font-size:2rem;}

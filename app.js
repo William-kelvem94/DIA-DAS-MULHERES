@@ -151,9 +151,22 @@ const mosaic = document.getElementById('mosaic');
 allPhotos.forEach((src, i) => {
   const img = document.createElement('img');
   img.src = src; img.alt = 'Memória nossa'; img.loading = 'lazy';
+  img.style.setProperty('--rand', Math.random());
   img.addEventListener('click', () => openLb(i));
   mosaic.appendChild(img);
 });
+
+// rotate moment photos periodically (rodízio)
+const momentPics = Array.from(document.querySelectorAll('.moment-photo'));
+function cycleMoments() {
+  if(momentPics.length===0) return;
+  const lastSrc = momentPics[momentPics.length-1].src;
+  for(let i=momentPics.length-1;i>0;i--){
+    momentPics[i].src = momentPics[i-1].src;
+  }
+  momentPics[0].src = lastSrc;
+}
+setInterval(cycleMoments, 10000);
 
 /* ── Lightbox com navegação ──────── */
 function openLb(i) {
